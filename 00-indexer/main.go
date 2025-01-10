@@ -16,16 +16,14 @@ func main() {
 
 	mailDir := "./mock/maildir"
 
-	result := uploadEmails(mailDir)
-
-	fmt.Println(result)
+	ok, successCount, errorCount := uploadEmails(mailDir)
 
 	duration := time.Since(startTime)
 
-	fmt.Printf("Duration: %v\n", duration)
+	fmt.Printf("Ok: %t, Success files: %d, Error files: %d Duration: %v\n", ok, successCount, errorCount, duration)
 }
 
-func uploadEmails(mailDir string) bool {
+func uploadEmails(mailDir string) (bool, int, int) {
 	var emails []email.Email
 	var mtx sync.Mutex
 
@@ -80,7 +78,7 @@ func uploadEmails(mailDir string) bool {
 	if err != nil {
 		fmt.Printf("Error proccessing emails: v%v\n", err)
 
-		return false
+		return false, 0, 0
 	}
 
 	for i := 0; i < cap(emailsCh); i++ {
@@ -94,8 +92,8 @@ func uploadEmails(mailDir string) bool {
 	if zsErr != nil {
 		fmt.Printf("Error uploading emails to ZincSearch: %v\n", zsErr)
 
-		return false
+		return false, 0, 0
 	}
 
-	return true
+	return true, 0, 0
 }
