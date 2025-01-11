@@ -11,6 +11,11 @@ import (
 	zs "00-indexer/functions/zincsearch"
 )
 
+type EmailError struct {
+	Error string `json:"error"`
+	Path  string `json:"path"`
+}
+
 func main() {
 	startTime := time.Now()
 
@@ -20,22 +25,19 @@ func main() {
 
 	duration := time.Since(startTime)
 
-	fmt.Printf("Ok: %t, Success files: %d, Error files: %d Duration: %v\n", ok, successCount, errorCount, duration)
+	fmt.Printf("Ok: %t - Duration: %v => Success: %d | Error: %d\n", ok, duration, successCount, errorCount)
 }
 
 func uploadEmails(mailDir string) (bool, int, int) {
-	var emails []email.Email
-	var mtx sync.Mutex
+	emails := []email.Email{}
+	emailErrors := []EmailError{}
+
+	total := 0
+	totalErrors := 0
+	totalSuccess := 0
 
 	emailsCh := make(chan struct{}, 10)
-
-	type EmailError struct {
-		Error string `json:"error"`
-		Path  string `json:"path"`
-	}
-
-	emailErrors := []EmailError{}
-	i := 1
+	var mtx sync.Mutex
 
 	err := filepath.Walk(mailDir, func(path string, info os.FileInfo, err error) error {
 		if err != nil {
@@ -48,25 +50,23 @@ func uploadEmails(mailDir string) (bool, int, int) {
 			go func() {
 				defer func() { <-emailsCh }()
 
-				email, err := email.ParseEmailFile(path)
+				emailJson, err := email.ParseEmailFile(path)
 
 				mtx.Lock()
 
-				log := fmt.Sprintf("Processing email %d: %s = ", i, path)
+				total++
+				hasError := err != nil
 
-				if err != nil {
-					log += "ERROR"
-
+				if hasError {
+					totalErrors++
 					errorMessage := fmt.Sprintf("Error parsing email: %v", err)
 					emailErrors = append(emailErrors, EmailError{Error: errorMessage, Path: path})
 				} else {
-					log += "OK"
-
-					emails = append(emails, email)
+					totalSuccess++
+					emails = append(emails, emailJson)
 				}
 
-				fmt.Println(log)
-				i++
+				fmt.Printf("Email %d - %t => %s\n", total, !hasError, path)
 
 				mtx.Unlock()
 			}()
@@ -76,24 +76,31 @@ func uploadEmails(mailDir string) (bool, int, int) {
 	})
 
 	if err != nil {
-		fmt.Printf("Error proccessing emails: v%v\n", err)
+		fmt.Printf("Error proccessing emails => %v\n", err)
 
-		return false, 0, 0
+		return false, totalSuccess, totalErrors
 	}
 
 	for i := 0; i < cap(emailsCh); i++ {
 		emailsCh <- struct{}{}
 	}
 
-	data := zs.Bulk[email.Email]{Index: "emails", Records: emails}
-
-	zsErr := zs.BulkPost(data)
-
-	if zsErr != nil {
-		fmt.Printf("Error uploading emails to ZincSearch: %v\n", zsErr)
-
-		return false, 0, 0
+	if len(emailErrors) > 0 {
+		fmt.Printf("Errors parsing emails: %v\n", emailErrors)
 	}
 
-	return true, 0, 0
+	ok := bulkEmails(emails)
+
+	return ok, totalSuccess, totalErrors
+}
+
+func bulkEmails(emails []email.Email) bool {
+	data := zs.Bulk[email.Email]{Index: "emails", Records: emails}
+
+	ok, message := zs.BulkPost(data)
+
+	fmt.Printf("Result uploading emails to ZincSearch (%t)\n", ok)
+	fmt.Printf("%v\n", message)
+
+	return ok
 }
