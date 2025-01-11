@@ -2,105 +2,101 @@ package main
 
 import (
 	"fmt"
-	"os"
-	"path/filepath"
 	"sync"
 	"time"
 
-	email "00-indexer/functions/emails"
-	zs "00-indexer/functions/zincsearch"
+	email "github.com/cloaiza1997/dev-test-tr-emails/functions/emails"
+	fs "github.com/cloaiza1997/dev-test-tr-emails/functions/files"
+	zs "github.com/cloaiza1997/dev-test-tr-emails/functions/zincsearch"
 )
 
-type EmailError struct {
-	Error string `json:"error"`
-	Path  string `json:"path"`
-}
+var INDEX = "emails"
+var INDEXING_BY_BATCH = true
+var BATCH_SIZE = 10000
 
 func main() {
-	startTime := time.Now()
+	startTime, startTimeFormated := formatTime()
+
+	fmt.Printf("%s - Start indexing emails...\n", startTimeFormated)
 
 	mailDir := "./mock/maildir"
 
-	ok, successCount, errorCount := uploadEmails(mailDir)
+	ok, successCount, errorCount, logs := uploadEmails(mailDir)
+
+	for i, log := range logs {
+		fmt.Println(i, log)
+	}
 
 	duration := time.Since(startTime)
 
-	fmt.Printf("Ok: %t - Duration: %v => Success: %d | Error: %d\n", ok, duration, successCount, errorCount)
+	_, endTimeFormated := formatTime()
+
+	fmt.Printf("%s - Duration: %v => Ok: %t | Success: %d | Error: %d\n", endTimeFormated, duration, ok, successCount, errorCount)
 }
 
-func uploadEmails(mailDir string) (bool, int, int) {
-	emails := []email.Email{}
-	emailErrors := []EmailError{}
+func formatTime() (time.Time, string) {
+	now := time.Now()
 
-	total := 0
-	totalErrors := 0
-	totalSuccess := 0
+	return now, now.Format("2006-01-02 15:04:05")
+}
+
+func uploadEmails(mailDir string) (bool, int, int, []string) {
+	batchEmails := [][]email.Email{}
+	emails := []email.Email{}
+	emailErrors := []email.EmailError{}
+	zincSearchLogs := []string{}
+
+	totalEmails := 0
+	totalBatch := 1
+	totalEmailBatch := 0
+	totalEmailProcessed := 0
 
 	emailsCh := make(chan struct{}, 10)
 	var mtx sync.Mutex
+	var wg sync.WaitGroup
 
-	err := filepath.Walk(mailDir, func(path string, info os.FileInfo, err error) error {
-		if err != nil {
-			return fmt.Errorf("error walking the path (%s): %v", mailDir, err)
-		}
-
-		if !info.IsDir() {
-			emailsCh <- struct{}{}
-
-			go func() {
-				defer func() { <-emailsCh }()
-
-				emailJson, err := email.ParseEmailFile(path)
-
-				mtx.Lock()
-
-				total++
-				hasError := err != nil
-
-				if hasError {
-					totalErrors++
-					errorMessage := fmt.Sprintf("Error parsing email: %v", err)
-					emailErrors = append(emailErrors, EmailError{Error: errorMessage, Path: path})
-				} else {
-					totalSuccess++
-					emails = append(emails, emailJson)
-				}
-
-				fmt.Printf("Email %d - %t => %s\n", total, !hasError, path)
-
-				mtx.Unlock()
-			}()
-		}
-
-		return nil
-	})
+	err := fs.WalkFilePath(mailDir, func(path string) { totalEmails++ })
 
 	if err != nil {
-		fmt.Printf("Error proccessing emails => %v\n", err)
-
-		return false, totalSuccess, totalErrors
+		return handleError(fmt.Sprintf("Error proccessing emails => %v\n", err))
 	}
 
-	for i := 0; i < cap(emailsCh); i++ {
-		emailsCh <- struct{}{}
+	fmt.Printf("Total emails: %d\n", totalEmails)
+
+	err = fs.WalkFilePath(mailDir, func(path string) {
+		email.HandleFile(email.HandleFileOptions{
+			Path:                path,
+			IndexByBatch:        INDEXING_BY_BATCH,
+			BatchSize:           BATCH_SIZE,
+			Ch:                  &emailsCh,
+			Wg:                  &wg,
+			Mtx:                 &mtx,
+			BatchEmails:         &batchEmails,
+			EmailErrors:         &emailErrors,
+			Emails:              &emails,
+			TotalBatch:          &totalBatch,
+			TotalEmailBatch:     &totalEmailBatch,
+			TotalEmailProcessed: &totalEmailProcessed,
+			TotalEmails:         &totalEmails,
+		})
+	})
+
+	wg.Wait()
+
+	if err != nil {
+		return handleError(fmt.Sprintf("Error proccessing emails => %v\n", err))
 	}
 
-	if len(emailErrors) > 0 {
-		fmt.Printf("Errors parsing emails: %v\n", emailErrors)
-	}
+	zs.IndexBatchZincSearch(INDEX, batchEmails, &zincSearchLogs, &wg, emailsCh)
 
-	ok := bulkEmails(emails)
+	totalEmailErrors := len(emailErrors)
+	totalEmailSuccess := totalEmails - totalEmailErrors
 
-	return ok, totalSuccess, totalErrors
+	return true, totalEmailSuccess, totalEmailErrors, zincSearchLogs
 }
 
-func bulkEmails(emails []email.Email) bool {
-	data := zs.Bulk[email.Email]{Index: "emails", Records: emails}
+func handleError(message string) (bool, int, int, []string) {
+	fmt.Println(message)
 
-	ok, message := zs.BulkPost(data)
-
-	fmt.Printf("Result uploading emails to ZincSearch (%t)\n", ok)
-	fmt.Printf("%v\n", message)
-
-	return ok
+	return false, 0, 0, []string{}
 }

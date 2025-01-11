@@ -4,6 +4,7 @@ import (
 	"fmt"
 	"os"
 	"strings"
+	"sync"
 )
 
 type Email struct {
@@ -26,6 +27,71 @@ type Email struct {
 	XFileName               string `json:"xFileName"`
 	Body                    string `json:"body"`
 	Path                    string `json:"path"`
+}
+
+type EmailError struct {
+	Error string `json:"error"`
+	Path  string `json:"path"`
+}
+
+type HandleFileOptions struct {
+	IndexByBatch        bool
+	BatchSize           int
+	Path                string
+	Ch                  *chan struct{}
+	Wg                  *sync.WaitGroup
+	Mtx                 *sync.Mutex
+	BatchEmails         *[][]Email
+	EmailErrors         *[]EmailError
+	Emails              *[]Email
+	TotalBatch          *int
+	TotalEmailBatch     *int
+	TotalEmailProcessed *int
+	TotalEmails         *int
+}
+
+func HandleFile(options HandleFileOptions) {
+	*options.Ch <- struct{}{}
+	options.Wg.Add(1)
+
+	go func() {
+		defer func() {
+			<-*options.Ch
+			options.Wg.Done()
+		}()
+
+		emailJson, err := ParseEmailFile(options.Path)
+
+		options.Mtx.Lock()
+
+		hasError := err != nil
+
+		if hasError {
+			errorMessage := fmt.Sprintf("Error parsing email: %v", err)
+			*options.EmailErrors = append(*options.EmailErrors, EmailError{Error: errorMessage, Path: options.Path})
+		} else {
+			*options.Emails = append(*options.Emails, emailJson)
+		}
+
+		*options.TotalEmailProcessed++
+		*options.TotalEmailBatch++
+
+		isLast := *options.TotalEmailProcessed == *options.TotalEmails
+
+		if *options.TotalEmailProcessed%options.BatchSize == 0 || isLast {
+			fmt.Printf("Batch %d (%d, %d) ...\n", *options.TotalBatch, *options.TotalEmailProcessed, *options.TotalEmailBatch)
+
+			*options.TotalBatch++
+			*options.TotalEmailBatch = 0
+
+			if options.IndexByBatch || isLast {
+				*options.BatchEmails = append(*options.BatchEmails, *options.Emails)
+				*options.Emails = []Email{}
+			}
+		}
+
+		options.Mtx.Unlock()
+	}()
 }
 
 func ParseEmailFile(path string) (Email, error) {
