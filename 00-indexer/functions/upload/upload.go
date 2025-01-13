@@ -11,21 +11,15 @@ import (
 	zs "github.com/cloaiza1997/dev-test-tr-emails/functions/zincsearch"
 )
 
-var INDEX = "emails"
-var INDEXING_BY_BATCH = true
-var BATCH_SIZE = 10000
+const INDEX = "emails"
+const BATCH_SIZE = 10000
 
-/*
- * TODO - IMPLEMENTAR RUTA DINÁMICA DEL DIRECTORIO DE ARCHIVOS Y EL FLAG DE INDEXACIÓN POR LOTE
- */
-func InitUpload() {
+func InitUpload(mailDir string, indexByBatch bool) {
 	startTime, startTimeFormated := util.FormatTime()
 
 	fmt.Printf("%s - Start indexing emails...\n", startTimeFormated)
 
-	mailDir := "./mock/maildir-25.000"
-
-	ok, successCount, errorCount, logs := uploadEmails(mailDir)
+	ok, successCount, errorCount, logs := uploadEmails(mailDir, indexByBatch)
 
 	for i, log := range logs {
 		fmt.Println(i, log)
@@ -35,10 +29,10 @@ func InitUpload() {
 
 	_, endTimeFormated := util.FormatTime()
 
-	fmt.Printf("%s - Duration: %v => Ok: %t | Success: %d | Error: %d\n", endTimeFormated, duration, ok, successCount, errorCount)
+	fmt.Printf("%s - Duration: %v => Ok: %t | Parsed Success: %d | Parsed Error: %d\n", endTimeFormated, duration, ok, successCount, errorCount)
 }
 
-func uploadEmails(mailDir string) (bool, int, int, []string) {
+func uploadEmails(mailDir string, indexByBatch bool) (bool, int, int, []string) {
 	batchEmails := [][]email.Email{}
 	emails := []email.Email{}
 	emailErrors := []email.EmailError{}
@@ -64,7 +58,7 @@ func uploadEmails(mailDir string) (bool, int, int, []string) {
 	err = fs.WalkFilePath(mailDir, func(path string) {
 		email.HandleFile(email.HandleFileOptions{
 			Path:                path,
-			IndexByBatch:        INDEXING_BY_BATCH,
+			IndexByBatch:        indexByBatch,
 			BatchSize:           BATCH_SIZE,
 			Ch:                  &emailsCh,
 			Wg:                  &wg,
@@ -83,6 +77,10 @@ func uploadEmails(mailDir string) (bool, int, int, []string) {
 
 	if err != nil {
 		return util.HandleReturnError(fmt.Sprintf("Error proccessing emails => %v\n", err))
+	}
+
+	if len(emailErrors) > 0 {
+		fmt.Printf("Error proccessing emails => %v\n", emailErrors)
 	}
 
 	zs.IndexBatchZincSearch(INDEX, batchEmails, &zincSearchLogs, &wg, emailsCh)
