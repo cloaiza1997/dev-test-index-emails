@@ -11,15 +11,20 @@ import (
 	zs "github.com/cloaiza1997/dev-test-tr-emails/functions/zincsearch"
 )
 
-const INDEX = "emails"
-const BATCH_SIZE = 10000
+type UploadOptions struct {
+	BatchSize    int
+	Index        string
+	IndexByBatch bool
+	MailDir      string
+	Routines     int
+}
 
-func InitUpload(mailDir string, indexByBatch bool) {
+func InitUpload(options UploadOptions) {
 	startTime, startTimeFormated := util.FormatTime()
 
-	fmt.Printf("%s - Start indexing emails (Emails=%s, Batch=%t)...\n", startTimeFormated, mailDir, indexByBatch)
+	fmt.Printf("%s - Start indexing emails (Emails=%s, Batch=%t)...\n", startTimeFormated, options.MailDir, options.IndexByBatch)
 
-	ok, successCount, errorCount, logs := uploadEmails(mailDir, indexByBatch)
+	ok, successCount, errorCount, logs := uploadEmails(options)
 
 	for i, log := range logs {
 		fmt.Println(i, log)
@@ -32,7 +37,7 @@ func InitUpload(mailDir string, indexByBatch bool) {
 	fmt.Printf("%s - Duration: %v => Ok: %t | Parsed Success: %d | Parsed Error: %d\n", endTimeFormated, duration, ok, successCount, errorCount)
 }
 
-func uploadEmails(mailDir string, indexByBatch bool) (bool, int, int, []string) {
+func uploadEmails(options UploadOptions) (bool, int, int, []string) {
 	batchEmails := [][]email.Email{}
 	emails := []email.Email{}
 	emailErrors := []email.EmailError{}
@@ -43,11 +48,11 @@ func uploadEmails(mailDir string, indexByBatch bool) (bool, int, int, []string) 
 	totalEmailBatch := 0
 	totalEmailProcessed := 0
 
-	emailsCh := make(chan struct{}, 10)
+	emailsCh := make(chan struct{}, options.Routines)
 	var mtx sync.Mutex
 	var wg sync.WaitGroup
 
-	errCount := fs.WalkFilePath(mailDir, func(path string) { totalEmails++ })
+	errCount := fs.WalkFilePath(options.MailDir, func(path string) { totalEmails++ })
 
 	if errCount != nil {
 		return handleReturnError(getErrorMessage(errCount))
@@ -55,11 +60,11 @@ func uploadEmails(mailDir string, indexByBatch bool) (bool, int, int, []string) 
 
 	fmt.Printf("Total emails: %d\n", totalEmails)
 
-	errMails := fs.WalkFilePath(mailDir, func(path string) {
+	errMails := fs.WalkFilePath(options.MailDir, func(path string) {
 		email.HandleFile(email.HandleFileOptions{
 			Path:                path,
-			IndexByBatch:        indexByBatch,
-			BatchSize:           BATCH_SIZE,
+			IndexByBatch:        options.IndexByBatch,
+			BatchSize:           options.BatchSize,
 			Ch:                  &emailsCh,
 			Wg:                  &wg,
 			Mtx:                 &mtx,
@@ -83,7 +88,7 @@ func uploadEmails(mailDir string, indexByBatch bool) (bool, int, int, []string) 
 		fmt.Println(getErrorMessage(emailErrors))
 	}
 
-	zs.IndexBatchZincSearch(INDEX, batchEmails, &zincSearchLogs, &wg, emailsCh)
+	zs.IndexBatchZincSearch(options.Index, batchEmails, &zincSearchLogs, &wg, emailsCh)
 
 	totalEmailErrors := len(emailErrors)
 	totalEmailSuccess := totalEmails - totalEmailErrors

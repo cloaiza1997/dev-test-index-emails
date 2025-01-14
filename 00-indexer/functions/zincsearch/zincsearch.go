@@ -12,7 +12,7 @@ import (
 
 var ZS_USER = os.Getenv("EMAIL_INDEX_ZS_USER")
 var ZS_PASS = os.Getenv("EMAIL_INDEX_ZS_PASS")
-var ZS_HOST = "http://localhost:4080/api"
+var ZS_HOST = os.Getenv("EMAIL_INDEX_ZS_HOST")
 
 type Bulk[T any] struct {
 	Index   string `json:"index"`
