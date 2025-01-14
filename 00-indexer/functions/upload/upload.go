@@ -17,7 +17,7 @@ const BATCH_SIZE = 10000
 func InitUpload(mailDir string, indexByBatch bool) {
 	startTime, startTimeFormated := util.FormatTime()
 
-	fmt.Printf("%s - Start indexing emails...\n", startTimeFormated)
+	fmt.Printf("%s - Start indexing emails (Emails=%s, Batch=%t)...\n", startTimeFormated, mailDir, indexByBatch)
 
 	ok, successCount, errorCount, logs := uploadEmails(mailDir, indexByBatch)
 
@@ -47,15 +47,15 @@ func uploadEmails(mailDir string, indexByBatch bool) (bool, int, int, []string) 
 	var mtx sync.Mutex
 	var wg sync.WaitGroup
 
-	err := fs.WalkFilePath(mailDir, func(path string) { totalEmails++ })
+	errCount := fs.WalkFilePath(mailDir, func(path string) { totalEmails++ })
 
-	if err != nil {
-		return util.HandleReturnError(fmt.Sprintf("Error proccessing emails => %v\n", err))
+	if errCount != nil {
+		return handleReturnError(getErrorMessage(errCount))
 	}
 
 	fmt.Printf("Total emails: %d\n", totalEmails)
 
-	err = fs.WalkFilePath(mailDir, func(path string) {
+	errMails := fs.WalkFilePath(mailDir, func(path string) {
 		email.HandleFile(email.HandleFileOptions{
 			Path:                path,
 			IndexByBatch:        indexByBatch,
@@ -75,12 +75,12 @@ func uploadEmails(mailDir string, indexByBatch bool) (bool, int, int, []string) 
 
 	wg.Wait()
 
-	if err != nil {
-		return util.HandleReturnError(fmt.Sprintf("Error proccessing emails => %v\n", err))
+	if errMails != nil {
+		return handleReturnError(getErrorMessage(errMails))
 	}
 
 	if len(emailErrors) > 0 {
-		fmt.Printf("Error proccessing emails => %v\n", emailErrors)
+		fmt.Println(getErrorMessage(emailErrors))
 	}
 
 	zs.IndexBatchZincSearch(INDEX, batchEmails, &zincSearchLogs, &wg, emailsCh)
@@ -89,4 +89,14 @@ func uploadEmails(mailDir string, indexByBatch bool) (bool, int, int, []string) 
 	totalEmailSuccess := totalEmails - totalEmailErrors
 
 	return true, totalEmailSuccess, totalEmailErrors, zincSearchLogs
+}
+
+func getErrorMessage(err any) string {
+	return fmt.Sprintf("Error proccessing emails => %v", err)
+}
+
+func handleReturnError(message string) (bool, int, int, []string) {
+	fmt.Println(message)
+
+	return false, 0, 0, []string{}
 }
