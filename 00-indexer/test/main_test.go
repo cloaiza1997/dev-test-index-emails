@@ -1,0 +1,17 @@
+package main
+
+import (
+	"testing"
+
+	upload "github.com/cloaiza1997/dev-test-tr-emails/functions/upload"
+)
+
+func TestProcessData(t *testing.T) {
+	upload.InitUpload(upload.UploadOptions{
+		Index:        "test-emails",
+		MailDir:      "../mock/maildir",
+		Routines:     10,
+		IndexByBatch: true,
+		BatchSize:    10000,
+	})
+}
