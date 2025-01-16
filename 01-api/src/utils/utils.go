@@ -13,13 +13,11 @@ import (
 
 func DoResponse(w http.ResponseWriter, status int, data interface{}, err error) {
 	response := models.Response{
-		Success: true,
+		Success: status == http.StatusOK,
 		Data:    data,
 	}
 
-	if err == nil {
-		response.Success = false
-	} else if status != http.StatusOK {
+	if err != nil {
 		status = http.StatusInternalServerError
 		response.Success = false
 		response.Message = err.Error()

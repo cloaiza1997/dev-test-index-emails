@@ -57,7 +57,7 @@ func getPaginationValues(page, limit int) (int, int) {
 func getQuery(term string, page, limit int) models.ZincSearchParams {
 	now := time.Now()
 	startTime := now.AddDate(-1, 0, 0).Format("2006-01-02T15:04:05Z")
-	endTime := now.Format("2006-01-02T15:04:05Z")
+	endTime := now.AddDate(1, 0, 0).Format("2006-01-02T15:04:05Z")
 
 	term = strings.TrimSpace(term)
 	from := (page * limit) - limit
