@@ -104,18 +104,18 @@ func ParseEmailFile(path string) (Email, error) {
 		return handleError(path, err)
 	}
 
-	return GetEmail(fileContent, path)
+	email := Email{Path: path}
+
+	return GetEmail(fileContent, &email)
 }
 
-func GetEmailByReader(fileContent []byte, path string) (Email, error) {
+func GetEmailByReader(fileContent []byte, email *Email) (Email, error) {
 	reader := bytes.NewReader(fileContent)
 	message, err := mail.ReadMessage(reader)
 
 	if err != nil {
-		return handleError(path, err)
+		return handleError(email.Path, err)
 	}
-
-	email := Email{Path: path}
 
 	email.MessageID = getHeader("Message-ID", message)
 	email.Date = getHeader("Date", message)
@@ -138,19 +138,18 @@ func GetEmailByReader(fileContent []byte, path string) (Email, error) {
 	body, e := io.ReadAll(message.Body)
 
 	if e != nil {
-		return handleError(path, err)
+		return handleError(email.Path, err)
 	}
 
 	email.Body = strings.TrimSpace(string(body))
 
-	return email, nil
+	return *email, nil
 }
 
-func GetEmail(fileContent []byte, path string) (Email, error) {
+func GetEmail(fileContent []byte, email *Email) (Email, error) {
 	fileLines := strings.Split(string(fileContent), "\n")
 	mapper := make(map[string]*string)
 
-	email := Email{Path: path}
 	bodyLines := []string{}
 
 	mapper["Message-ID"] = &email.MessageID
@@ -198,7 +197,7 @@ func GetEmail(fileContent []byte, path string) (Email, error) {
 
 	email.Body = strings.TrimSpace(strings.Join(bodyLines, "\n"))
 
-	return email, nil
+	return *email, nil
 }
 
 func getHeader(key string, message *mail.Message) string {
