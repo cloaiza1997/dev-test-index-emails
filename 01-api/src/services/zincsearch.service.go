@@ -66,8 +66,11 @@ func getQuery(term string, page, limit int) models.ZincSearchParams {
 
 	if term == "" {
 		searchType = "matchall"
-	} else {
+	} else if len(strings.Split(term, " ")) > 1 {
 		searchType = "match"
+	} else {
+		term = "*" + term + "*"
+		searchType = "wildcard"
 	}
 
 	zsQuery := models.ZincSearchParams{
@@ -97,6 +100,7 @@ func getQuery(term string, page, limit int) models.ZincSearchParams {
 			"xFileName",
 			"body",
 			"path",
+			"mainFolder",
 		},
 	}
 
