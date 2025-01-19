@@ -17,3 +17,16 @@ export interface EmailInterface {
   path: string
   mainFolder: string
 }
+
+export interface EmailSearchResponseInterface {
+  pagination: PaginationInterface
+  items: EmailInterface[]
+}
+
+export interface PaginationInterface {
+  total: number
+  count: number
+  pages: number
+  prev: number
+  next: number
+}

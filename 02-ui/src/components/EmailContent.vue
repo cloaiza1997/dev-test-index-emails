@@ -6,18 +6,19 @@ import type { EmailInterface } from '@/interfaces/email.interface'
 </script>
 
 <template>
-  <div class="flex flex-col gap-4 w-full h-full">
-    <section class="flex flex-col p-4 rounded-2xl bg-blue-400">
+  <div class="overflow-hidden flex flex-col gap-4 w-full h-full">
+    <section class="flex flex-col p-4 rounded-2xl text-sm sm:text-base bg-blue-400">
       <h3>{{ getDate(email.date) }}</h3>
-      <h2 class="font-bold">{{ email.subject || 'Sin asunto' }}</h2>
+
+      <h2 class="font-bold break-all">{{ email.subject || 'Sin asunto' }}</h2>
     </section>
 
     <section class="overflow-hidden flex flex-col flex-1 rounded-2xl h-full bg-blue-300">
-      <div class="overflow-auto flex flex-col flex-1 h-full w-full">
+      <div ref="emailContent" class="overflow-auto flex flex-col flex-1 h-full w-full">
         <div class="flex gap-2 p-4">
           <AvatarImage :text="email?.from" />
 
-          <div class="flex flex-col gap-2">
+          <div class="flex flex-col gap-1">
             <EmailLabel label="De" :text="email.from" />
             <EmailLabel label="Para" :text="email.to" />
             <EmailLabel label="CC" :text="email.cc" />
@@ -25,7 +26,7 @@ import type { EmailInterface } from '@/interfaces/email.interface'
           </div>
         </div>
 
-        <p v-html="email?.body.replace(/\n/gim, '</br>')" class="border-t p-4 w-full"></p>
+        <p v-html="getEmailContent" class="border-t p-4 text-sm sm:text-base break-all w-full"></p>
       </div>
     </section>
   </div>
@@ -40,8 +41,14 @@ export default {
       required: true,
     },
   },
-  data() {
-    return {}
+  computed: {
+    getEmailContent() {
+      const emailContent = this.$refs.emailContent as HTMLElement
+
+      emailContent?.scrollTo({ top: 0 })
+
+      return this.email?.body.replace(/\n/gim, '</br>')
+    },
   },
 }
 </script>

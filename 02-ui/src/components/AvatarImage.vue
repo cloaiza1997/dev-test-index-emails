@@ -11,7 +11,7 @@ export default {
   name: 'AvatarImage',
   props: {
     text: {
-      type: String as () => string | undefined,
+      type: [String, undefined],
       required: true,
     },
   },

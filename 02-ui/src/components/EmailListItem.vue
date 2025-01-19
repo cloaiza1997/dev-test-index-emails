@@ -15,7 +15,7 @@ import AvatarImage from './AvatarImage.vue'
         <p class="text-xs min-w-max pl-2 pr-1 leading-none">{{ getDate(email.date) }}</p>
       </div>
 
-      <p class="text-left truncate leading-none">{{ email.subject }}</p>
+      <p class="text-left truncate leading-tight">{{ email.subject }}</p>
     </div>
   </div>
 </template>

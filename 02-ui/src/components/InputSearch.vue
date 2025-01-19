@@ -5,18 +5,46 @@ import ImageIcon from './ImageIcon.vue'
 
 <template>
   <div
-    class="flex gap-2 items-center border border-gray-400 focus:border-gray-700 rounded-full pl-5 pr-1 py-1 w-full"
+    class="flex gap-2 items-center border border-gray-400 focus:border-gray-700 rounded-full overflow-hidden pl-5 pr-1 py-1 w-full min-h-[50px]"
   >
     <ImageIcon icon="search.svg" alt="search" class-name="w-4 h-4" />
 
-    <input type="text" placeholder="Buscar correos" class="w-full h-full" autofocus="true" />
+    <input
+      ref="inputSearch"
+      type="text"
+      placeholder="Buscar correos"
+      class="w-full h-10"
+      :autofocus="true"
+      v-model="term"
+      @keyup.enter="onSearch"
+    />
 
-    <ButtonCircle icon="close.svg" />
+    <ButtonCircle v-if="term.trim()" icon="close.svg" :click="clean" />
   </div>
 </template>
 
 <script lang="ts">
 export default {
   name: 'InputSearch',
+  data() {
+    return {
+      term: '',
+    }
+  },
+  methods: {
+    clean() {
+      this.term = ''
+      const inputSearch = this.$refs.inputSearch as HTMLInputElement
+
+      if (inputSearch) {
+        inputSearch.focus()
+      }
+
+      this.onSearch()
+    },
+    onSearch() {
+      this.$emit('initSearch', this.term.trim())
+    },
+  },
 }
 </script>

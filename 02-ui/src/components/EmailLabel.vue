@@ -1,6 +1,6 @@
 <template>
-  <p v-if="text">
-    <span class="text-sm font-bold">{{ label }}:</span> {{ text }}
+  <p v-if="text" class="text-sm sm:text-base">
+    <span class="text-xs sm:text-sm font-bold">{{ label }}:</span> {{ text }}
   </p>
 </template>
 
