@@ -1,0 +1,169 @@
+{
+  "name": "",
+  "storage_type": "disk",
+  "shard_num": 3,
+  "mappings": {
+    "properties": {
+      "bcc": {
+        "type": "text",
+        "index": true,
+        "store": false,
+        "sortable": false,
+        "aggregatable": false,
+        "highlightable": true
+      },
+      "body": {
+        "type": "text",
+        "index": true,
+        "store": false,
+        "sortable": false,
+        "aggregatable": false,
+        "highlightable": true
+      },
+      "cc": {
+        "type": "text",
+        "index": true,
+        "store": false,
+        "sortable": false,
+        "aggregatable": false,
+        "highlightable": true
+      },
+      "contentTransferEncoding": {
+        "type": "text",
+        "index": true,
+        "store": false,
+        "sortable": false,
+        "aggregatable": false,
+        "highlightable": false
+      },
+      "contentType": {
+        "type": "text",
+        "index": true,
+        "store": false,
+        "sortable": false,
+        "aggregatable": false,
+        "highlightable": false
+      },
+      "date": {
+        "type": "text",
+        "index": true,
+        "store": false,
+        "sortable": false,
+        "aggregatable": false,
+        "highlightable": false
+      },
+      "from": {
+        "type": "text",
+        "index": true,
+        "store": false,
+        "sortable": false,
+        "aggregatable": false,
+        "highlightable": true
+      },
+      "mainFolder": {
+        "type": "text",
+        "index": true,
+        "store": false,
+        "sortable": false,
+        "aggregatable": false,
+        "highlightable": false
+      },
+      "messageId": {
+        "type": "text",
+        "index": true,
+        "store": false,
+        "sortable": false,
+        "aggregatable": false,
+        "highlightable": false
+      },
+      "mimeVersion": {
+        "type": "text",
+        "index": true,
+        "store": false,
+        "sortable": false,
+        "aggregatable": false,
+        "highlightable": false
+      },
+      "path": {
+        "type": "text",
+        "index": true,
+        "store": false,
+        "sortable": false,
+        "aggregatable": false,
+        "highlightable": false
+      },
+      "subject": {
+        "type": "text",
+        "index": true,
+        "store": false,
+        "sortable": false,
+        "aggregatable": false,
+        "highlightable": true
+      },
+      "to": {
+        "type": "text",
+        "index": true,
+        "store": false,
+        "sortable": false,
+        "aggregatable": false,
+        "highlightable": true
+      },
+      "xBcc": {
+        "type": "text",
+        "index": true,
+        "store": false,
+        "sortable": false,
+        "aggregatable": false,
+        "highlightable": true
+      },
+      "xCc": {
+        "type": "text",
+        "index": true,
+        "store": false,
+        "sortable": false,
+        "aggregatable": false,
+        "highlightable": true
+      },
+      "xFileName": {
+        "type": "text",
+        "index": true,
+        "store": false,
+        "sortable": false,
+        "aggregatable": false,
+        "highlightable": false
+      },
+      "xFolder": {
+        "type": "text",
+        "index": true,
+        "store": false,
+        "sortable": false,
+        "aggregatable": false,
+        "highlightable": false
+      },
+      "xFrom": {
+        "type": "text",
+        "index": true,
+        "store": false,
+        "sortable": false,
+        "aggregatable": false,
+        "highlightable": true
+      },
+      "xOrigin": {
+        "type": "text",
+        "index": true,
+        "store": false,
+        "sortable": false,
+        "aggregatable": false,
+        "highlightable": false
+      },
+      "xTo": {
+        "type": "text",
+        "index": true,
+        "store": false,
+        "sortable": false,
+        "aggregatable": false,
+        "highlightable": true
+      }
+    }
+  }
+}

@@ -1,13 +1,12 @@
 package functions
 
 import (
-	"bytes"
-	"encoding/json"
 	"fmt"
-	"net/http"
 	"os"
 	"sync"
 	"time"
+
+	utils "github.com/cloaiza1997/dev-test-tr-emails/functions/utils"
 )
 
 var ZS_USER = os.Getenv("EMAIL_INDEX_ZS_USER")
@@ -19,14 +18,54 @@ type Bulk[T any] struct {
 	Records []T    `json:"records"`
 }
 
+type PropertyDetail struct {
+	Type          string `json:"type"`
+	Index         bool   `json:"index"`
+	Store         bool   `json:"store"`
+	Sortable      bool   `json:"sortable"`
+	Aggregatable  bool   `json:"aggregatable"`
+	Highlightable bool   `json:"highlightable"`
+}
+
+type Mapping struct {
+	Properties map[string]PropertyDetail `json:"properties"`
+}
+
+type IndexStructure struct {
+	Name         string  `json:"name"`
+	StorageType  string  `json:"storage_type"`
+	ShardNum     int     `json:"shard_num"`
+	MappingField Mapping `json:"mappings"`
+}
+
 func BulkRecords[T any](index string, records []T, zincSearchLogs *[]string) {
 	data := Bulk[T]{Index: index, Records: records}
 
-	ok, message := PostIndex(data)
+	ok, message := bulkBatch(data)
 
 	log := fmt.Sprintf("Result uploading %s to ZincSearch (%t) => %v", index, ok, message)
 
 	*zincSearchLogs = append(*zincSearchLogs, log)
+}
+
+func CreateIndex(data IndexStructure) (bool, error) {
+	fmt.Println("ZincSearch create index...")
+
+	response, err := utils.NewRequest(utils.Request{
+		Method: "POST",
+		Url:    ZS_HOST + "/index",
+		Body:   data,
+		Auth: utils.RequestAuth{
+			User: ZS_USER,
+			Pass: ZS_PASS,
+		},
+	})
+
+	if err != nil {
+		return false, err
+	}
+
+	return response.StatusCode == 200, nil
 }
 
 func IndexBatchZincSearch[T any](index string, batchEmails [][]T, zincSearchLogs *[]string, wg *sync.WaitGroup, ch chan struct{}) {
@@ -53,36 +92,42 @@ func IndexBatchZincSearch[T any](index string, batchEmails [][]T, zincSearchLogs
 	fmt.Println("Duration uploading emails:", duration)
 }
 
-func PostIndex[T any](data Bulk[T]) (bool, string) {
-	startTime := time.Now()
+func ValidateIndexExists(index string) (bool, error) {
+	fmt.Println("ZincSearch validate index...")
+
+	response, err := utils.NewRequest(utils.Request{
+		Method: "GET",
+		Url:    ZS_HOST + "/" + index + "/_mapping",
+		Auth: utils.RequestAuth{
+			User: ZS_USER,
+			Pass: ZS_PASS,
+		},
+	})
+
+	if response.StatusCode != 400 && err != nil {
+		return false, err
+	}
+
+	return response.StatusCode == 200, nil
+}
+
+func bulkBatch[T any](data Bulk[T]) (bool, string) {
 	fmt.Println("ZincSearch bulk upload...")
 
-	jsonData, err := json.Marshal(data)
+	startTime := time.Now()
+
+	response, err := utils.NewRequest(utils.Request{
+		Method: "POST",
+		Url:    ZS_HOST + "/_bulkv2",
+		Body:   data,
+		Auth: utils.RequestAuth{
+			User: ZS_USER,
+			Pass: ZS_PASS,
+		},
+	})
 
 	if err != nil {
-		return false, fmt.Sprintf("error marshalling data (index=%s): %v", data.Index, err)
-	}
-
-	request, err := http.NewRequest("POST", ZS_HOST+"/_bulkv2", bytes.NewReader(jsonData))
-
-	if err != nil {
-		return false, fmt.Sprintf("error creating request: %v", err)
-	}
-
-	request.Header.Set("Content-Type", "application/json")
-	request.SetBasicAuth(ZS_USER, ZS_PASS)
-
-	client := &http.Client{}
-	response, err := client.Do(request)
-
-	if err != nil {
-		return false, fmt.Sprintf("error sending request: %v", err)
-	}
-
-	defer response.Body.Close()
-
-	if response.StatusCode != http.StatusOK {
-		return false, fmt.Sprintf("error response: %v", response)
+		return false, fmt.Sprintf("%v", err)
 	}
 
 	duration := time.Since(startTime)
