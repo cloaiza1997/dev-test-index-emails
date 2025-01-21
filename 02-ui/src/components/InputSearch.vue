@@ -19,13 +19,16 @@ import ImageIcon from './ImageIcon.vue'
       @keyup.enter="onSearch"
     />
 
-    <ButtonCircle v-if="term.trim()" icon="close.svg" :click="clean" />
+    <ButtonCircle v-if="term.trim()" icon="close.svg" :click="clean" :disabled="disabled" />
   </div>
 </template>
 
 <script lang="ts">
 export default {
   name: 'InputSearch',
+  props: {
+    disabled: Boolean,
+  },
   data() {
     return {
       term: '',

@@ -1,6 +1,10 @@
 import { format } from '@formkit/tempo'
 
-export function getDate(date: string): string {
+export function getDate(date: string | undefined | null): string {
+  if (!date) {
+    return ''
+  }
+
   return format(new Date(date), 'YYYY-MM-DD')
 }
 

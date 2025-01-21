@@ -12,7 +12,7 @@ import type { EmailHighlightInterface } from '@/interfaces/email.interface'
       <div class="flex items-center justify-between">
         <p class="text-sm truncate leading-tight" v-html="getFrom"></p>
 
-        <p class="text-xs min-w-max pl-2 pr-1 leading-none">
+        <p class="text-xs min-w-max ml-2 mr-1 leading-none">
           {{ getDate(data.email.date) }}
         </p>
       </div>
