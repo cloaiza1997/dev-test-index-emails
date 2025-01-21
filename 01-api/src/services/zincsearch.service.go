@@ -85,6 +85,7 @@ func getQuery(term string, page, limit int) models.ZincSearchParams {
 		SortFields: []string{"@timestamp"},
 		Source: []string{
 			"messageId",
+			"date",
 			"from",
 			"to",
 			"cc",
@@ -106,7 +107,6 @@ func getQuery(term string, page, limit int) models.ZincSearchParams {
 				"bcc":     {},
 				"body":    {},
 				"cc":      {},
-				"date":    {},
 				"from":    {},
 				"subject": {},
 				"to":      {},
