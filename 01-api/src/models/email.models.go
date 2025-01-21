@@ -19,7 +19,12 @@ type Email struct {
 	Path      string `json:"path"`
 }
 
+type EmailHighlight struct {
+	Email     Email               `json:"email"`
+	Highlight map[string][]string `json:"highlight"`
+}
+
 type EmailList struct {
-	Pagination Pagination `json:"pagination"`
-	Items      []Email    `json:"items"`
+	Pagination Pagination       `json:"pagination"`
+	Items      []EmailHighlight `json:"items"`
 }

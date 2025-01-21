@@ -28,10 +28,10 @@ func (z ZincSearchRepository) Search(query models.QuerySearch) (models.EmailList
 		return models.EmailList{}, err
 	}
 
-	items := []models.Email{}
+	items := []models.EmailHighlight{}
 
 	for _, email := range result.Hits.Hits {
-		items = append(items, email.Source)
+		items = append(items, models.EmailHighlight{Email: email.Source, Highlight: email.Highlight})
 	}
 
 	list := models.EmailList{
@@ -76,7 +76,7 @@ func getQuery(term string, page, limit int) models.ZincSearchParams {
 	zsQuery := models.ZincSearchParams{
 		SearchType: searchType,
 		Query: models.ZincSearchQuery{
-			Term:      term,
+			Term:      strings.ReplaceAll(term, "@", "\\@"),
 			StartTime: startTime,
 			EndTime:   endTime,
 		},
@@ -85,7 +85,6 @@ func getQuery(term string, page, limit int) models.ZincSearchParams {
 		SortFields: []string{"@timestamp"},
 		Source: []string{
 			"messageId",
-			"date",
 			"from",
 			"to",
 			"cc",
@@ -101,6 +100,21 @@ func getQuery(term string, page, limit int) models.ZincSearchParams {
 			"body",
 			"path",
 			"mainFolder",
+		},
+		Highlight: models.ZincSearchHighliht{
+			Fields: map[string]struct{}{
+				"bcc":     {},
+				"body":    {},
+				"cc":      {},
+				"date":    {},
+				"from":    {},
+				"subject": {},
+				"to":      {},
+				"xBcc":    {},
+				"xCc":     {},
+				"xFrom":   {},
+				"xTo":     {},
+			},
 		},
 	}
 
