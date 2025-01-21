@@ -19,7 +19,12 @@ export function replaceHighlight(
   }
 
   highlights.forEach((highlight) => {
-    const _highlight = highlight.replace(/…/gim, '').replace(/\n/gim, '</br>')
+    const _highlight = highlight
+      .replace(/…/gim, '')
+      .replace(/\n/gim, '</br>')
+      .replace(/&lt;/gim, '<')
+      .replace(/&gt;/gim, '>')
+
     const searchValue = _highlight.replace(/<mark>|<\/mark>/gim, '').trim()
 
     result = result.replace(searchValue, _highlight)

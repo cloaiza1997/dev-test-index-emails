@@ -19,7 +19,13 @@ import ImageIcon from './ImageIcon.vue'
       @keyup.enter="onSearch"
     />
 
-    <ButtonCircle v-if="term.trim()" icon="close.svg" :click="clean" :disabled="disabled" />
+    <ButtonCircle
+      v-if="term.trim()"
+      icon="close.svg"
+      title="Limpiar búsqueda"
+      :click="clean"
+      :disabled="disabled"
+    />
   </div>
 </template>
 

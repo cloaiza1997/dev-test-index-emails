@@ -2,6 +2,7 @@
 import { searchEmails } from '@/services/email.service'
 import ButtonCircle from './ButtonCircle.vue'
 import EmailContent from './EmailContent.vue'
+import EmailContentFile from './EmailContentFile.vue'
 import EmailListItem from './EmailListItem.vue'
 import EmailListSkeleton from './EmailListSkeleton.vue'
 import EmailViewSkeleton from './EmailViewSkeleton.vue'
@@ -27,7 +28,7 @@ import type { EmailHighlightInterface, PaginationInterface } from '@/interfaces/
             <p>No hay correos que coincidan con la búsqueda.</p>
           </div>
 
-          <ul v-else ref="emailList" class="overflow-auto flex flex-1 flex-col h-full w-full">
+          <ul v-else ref="emailList" class="overflow-auto flex flex-1 flex-col pb-4 h-full w-full">
             <li
               v-for="(data, index) in emails"
               :key="data.email.messageId"
@@ -37,11 +38,7 @@ import type { EmailHighlightInterface, PaginationInterface } from '@/interfaces/
               }"
               class="hover:bg-red-300"
             >
-              <button
-                class="w-full"
-                :class="{ 'border-b': index + 1 < emails.length }"
-                @click="setEmailSelected(index, data)"
-              >
+              <button class="border-b w-full" @click="setEmailSelected(index, data)">
                 <EmailListItem :data="data" />
               </button>
             </li>
@@ -53,6 +50,7 @@ import type { EmailHighlightInterface, PaginationInterface } from '@/interfaces/
         <template v-if="pagination.pages > 1">
           <ButtonCircle
             icon="arrow-left.svg"
+            title="Página anterior"
             :disabled="loading || pagination.prev == 0"
             :click="() => changePage(-1)"
           />
@@ -72,6 +70,7 @@ import type { EmailHighlightInterface, PaginationInterface } from '@/interfaces/
 
           <ButtonCircle
             icon="arrow-right.svg"
+            title="Página siguiente"
             :disabled="loading || pagination.next == 0"
             :click="() => changePage(1)"
           />
@@ -97,26 +96,43 @@ import type { EmailHighlightInterface, PaginationInterface } from '@/interfaces/
 
         <div class="flex items-center gap-2">
           <ButtonCircle
+            icon="doc.svg"
+            :click="toggleShowFile"
+            :pressed="showFile"
+            :disabled="loading"
+            :title="
+              showFile ? 'Mostrar contenido del archivo de correo' : 'Vista previa del correo'
+            "
+          />
+
+          <ButtonCircle
             icon="arrow-left.svg"
+            title="Correo anterior"
             :disabled="loading || (emailSelectedIdex == 0 && pagination.prev == 0)"
             :click="() => handleEmailChange(-1)"
           />
 
           <ButtonCircle
             icon="arrow-right.svg"
+            title="Correo siguiente"
             :disabled="loading || (emailSelectedIdex == emails.length - 1 && pagination.next == 0)"
             :click="() => handleEmailChange(1)"
           />
 
           <ButtonCircle
             icon="close.svg"
+            title="Cerrar"
             :click="() => setEmailSelected(0, null)"
             :disabled="loading"
           />
         </div>
       </div>
 
-      <EmailContent v-if="emailSelected" :data="emailSelected" />
+      <template v-if="emailSelected">
+        <EmailContentFile v-if="showFile" :data="emailSelected" />
+
+        <EmailContent v-else :data="emailSelected" />
+      </template>
 
       <div v-else class="flex items-center justify-center rounded-2xl w-full h-full bg-gray-400">
         <h3>Selecciona un correo para visualizar su contenido.</h3>
@@ -130,16 +146,15 @@ export default {
   name: 'EmailList',
   data() {
     return {
+      emailSelectedIdex: 0,
+      emailSelected: null as EmailHighlightInterface | null,
+      emails: [] as EmailHighlightInterface[],
+      loading: false,
       paginationConfig: {
         page: 1,
         limit: 20,
         itemsProcessed: 0,
       },
-      emailSelectedIdex: 0,
-      emailSelected: null as EmailHighlightInterface | null,
-      emails: [] as EmailHighlightInterface[],
-      skeleton: true,
-      loading: false,
       pagination: {
         total: 0,
         count: 0,
@@ -147,6 +162,8 @@ export default {
         next: 0,
         prev: 0,
       } as PaginationInterface,
+      skeleton: true,
+      showFile: false,
       term: '',
     }
   },
@@ -245,6 +262,10 @@ export default {
     setEmailSelected(emailSelectedIdex: number, email: EmailHighlightInterface | null) {
       this.emailSelectedIdex = emailSelectedIdex
       this.emailSelected = email
+    },
+
+    toggleShowFile() {
+      this.showFile = !this.showFile
     },
   },
 }

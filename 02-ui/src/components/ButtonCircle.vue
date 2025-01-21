@@ -8,9 +8,12 @@ import ImageIcon from './ImageIcon.vue'
     :class="[
       disabled
         ? 'cursor-not-allowed pointer-events-none bg-gray-300'
-        : 'bg-blue-300 hover:bg-blue-500',
+        : pressed
+          ? 'bg-orange-300 hover:bg-orange-400'
+          : 'bg-blue-300 hover:bg-blue-500',
     ]"
     :disabled="disabled"
+    :title="title"
     @:click="_onClick"
   >
     <ImageIcon :icon="icon" alt="button" class-name="w-4 h-4" />
@@ -21,6 +24,11 @@ import ImageIcon from './ImageIcon.vue'
 export default {
   name: 'ButtonCircle',
   props: {
+    click: {
+      type: Function,
+      required: true,
+      default: () => {},
+    },
     disabled: {
       type: Boolean,
     },
@@ -28,10 +36,12 @@ export default {
       type: String,
       required: true,
     },
-    click: {
-      type: Function,
+    pressed: {
+      type: Boolean,
+    },
+    title: {
+      type: String,
       required: true,
-      default: () => {},
     },
   },
   methods: {
