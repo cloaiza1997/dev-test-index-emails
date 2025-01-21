@@ -18,9 +18,25 @@ export interface EmailInterface {
   mainFolder: string
 }
 
+export interface EmailHighlightInterface {
+  email: EmailInterface
+  highlight: {
+    bcc?: string[]
+    body?: string[]
+    cc?: string[]
+    from?: string[]
+    subject?: string[]
+    to?: string[]
+    xBcc?: string[]
+    xCc?: string[]
+    xFrom?: string[]
+    xTo?: string[]
+  } | null
+}
+
 export interface EmailSearchResponseInterface {
   pagination: PaginationInterface
-  items: EmailInterface[]
+  items: EmailHighlightInterface[]
 }
 
 export interface PaginationInterface {

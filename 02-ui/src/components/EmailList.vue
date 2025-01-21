@@ -1,11 +1,10 @@
 <script setup lang="ts">
-import EmailContent from './EmailContent.vue'
-import EmailListItem from './EmailListItem.vue'
-
 import { searchEmails } from '@/services/email.service'
 import ButtonCircle from './ButtonCircle.vue'
+import EmailContent from './EmailContent.vue'
+import EmailListItem from './EmailListItem.vue'
 import InputSearch from './InputSearch.vue'
-import type { EmailInterface, PaginationInterface } from '@/interfaces/email.interface'
+import type { EmailHighlightInterface, PaginationInterface } from '@/interfaces/email.interface'
 </script>
 
 <template>
@@ -19,17 +18,19 @@ import type { EmailInterface, PaginationInterface } from '@/interfaces/email.int
       <div class="overflow-hidden rounded-2xl h-full w-full">
         <ul ref="emailList" class="overflow-auto flex flex-1 flex-col h-full w-full bg-red-200">
           <li
-            v-for="(email, index) in emails"
-            :key="email.messageId"
-            :class="{ 'bg-red-400 email-selected': email.messageId === emailSelected?.messageId }"
+            v-for="(data, index) in emails"
+            :key="data.email.messageId"
+            :class="{
+              'bg-red-400 email-selected': data.email.messageId === emailSelected?.email.messageId,
+            }"
             class="hover:bg-red-300"
           >
             <button
               class="w-full"
               :class="{ 'border-b': index + 1 < emails.length }"
-              @click="setEmailSelected(index, email)"
+              @click="setEmailSelected(index, data)"
             >
-              <EmailListItem :email="email" />
+              <EmailListItem :data="data" />
             </button>
           </li>
         </ul>
@@ -98,7 +99,7 @@ import type { EmailInterface, PaginationInterface } from '@/interfaces/email.int
         </div>
       </div>
 
-      <EmailContent v-if="emailSelected" :email="emailSelected" />
+      <EmailContent v-if="emailSelected" :data="emailSelected" />
 
       <div v-else class="flex items-center justify-center rounded-2xl w-full h-full bg-gray-400">
         <h3>Selecciona un correo para visualizar su contenido.</h3>
@@ -114,12 +115,12 @@ export default {
     return {
       paginationConfig: {
         page: 1,
-        limit: 100,
+        limit: 20,
         itemsProcessed: 0,
       },
       emailSelectedIdex: 0,
-      emailSelected: null as EmailInterface | null,
-      emails: [] as EmailInterface[],
+      emailSelected: null as EmailHighlightInterface | null,
+      emails: [] as EmailHighlightInterface[],
       skeleton: true,
       loading: false,
       pagination: {
@@ -221,7 +222,7 @@ export default {
       }
     },
 
-    setEmailSelected(emailSelectedIdex: number, email: EmailInterface | null) {
+    setEmailSelected(emailSelectedIdex: number, email: EmailHighlightInterface | null) {
       this.emailSelectedIdex = emailSelectedIdex
       this.emailSelected = email
     },

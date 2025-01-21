@@ -1,21 +1,23 @@
 <script setup lang="ts">
-import { getDate } from '@/utils/utils'
-import type { EmailInterface } from '@/interfaces/email.interface'
-
+import { getDate, replaceHighlight } from '@/utils/utils'
 import AvatarImage from './AvatarImage.vue'
+import type { EmailHighlightInterface } from '@/interfaces/email.interface'
 </script>
 
 <template>
   <div class="flex gap-2 p-2 w-full">
-    <AvatarImage :text="email.from" />
+    <AvatarImage :text="data.email.from" />
 
-    <div class="overflow-hidden flex flex-col gap-2 justify-between w-full h-auto">
+    <div class="overflow-hidden flex flex-col justify-between w-full h-auto">
       <div class="flex items-center justify-between">
-        <p class="text-sm truncate leading-none">{{ email.from }}</p>
-        <p class="text-xs min-w-max pl-2 pr-1 leading-none">{{ getDate(email.date) }}</p>
+        <p class="text-sm truncate leading-tight" v-html="getFrom"></p>
+
+        <p class="text-xs min-w-max pl-2 pr-1 leading-none">
+          {{ getDate(data.email.date) }}
+        </p>
       </div>
 
-      <p class="text-left truncate leading-tight">{{ email.subject }}</p>
+      <p class="text-left truncate leading-tight" v-html="getSubject"></p>
     </div>
   </div>
 </template>
@@ -24,13 +26,19 @@ import AvatarImage from './AvatarImage.vue'
 export default {
   name: 'EmailListItem',
   props: {
-    email: {
-      type: Object as () => EmailInterface,
+    data: {
+      type: Object as () => EmailHighlightInterface,
       required: true,
     },
   },
-  data() {
-    return {}
+  computed: {
+    getFrom() {
+      return replaceHighlight(this.data.email.from, this.data.highlight?.from)
+    },
+
+    getSubject() {
+      return replaceHighlight(this.data.email.subject, this.data.highlight?.subject)
+    },
   },
 }
 </script>
