@@ -24,7 +24,10 @@ import type { EmailHighlightInterface, PaginationInterface } from '@/interfaces/
         <EmailListSkeleton v-if="loading" />
 
         <template v-else>
-          <div v-if="emails.length === 0" class="flex items-center justify-center w-full h-full">
+          <div
+            v-if="emails.length === 0"
+            class="flex items-center justify-center text-center p-4 w-full h-full"
+          >
             <p>No hay correos que coincidan con la búsqueda.</p>
           </div>
 
@@ -34,6 +37,7 @@ import type { EmailHighlightInterface, PaginationInterface } from '@/interfaces/
               :key="data.email.messageId"
               :class="{
                 'bg-red-400 email-selected':
+                  emailSelectedIdex === index &&
                   data.email.messageId === emailSelected?.email.messageId,
               }"
               class="hover:bg-red-300"
@@ -64,7 +68,7 @@ import type { EmailHighlightInterface, PaginationInterface } from '@/interfaces/
               {{ paginationConfig.itemsProcessed + pagination.count }}
               de
               {{ pagination.total }}
-              emails
+              correos
             </p>
           </div>
 
@@ -77,7 +81,7 @@ import type { EmailHighlightInterface, PaginationInterface } from '@/interfaces/
         </template>
 
         <template v-else>
-          <p class="text-sm text-center w-full">{{ pagination.total }} emails</p>
+          <p class="text-sm text-center w-full">Correos: {{ pagination.total }}</p>
         </template>
       </div>
     </section>
@@ -88,7 +92,7 @@ import type { EmailHighlightInterface, PaginationInterface } from '@/interfaces/
     >
       <div v-if="emailSelected" class="flex items-center justify-between gap-2 py-1 my-[1px]">
         <p class="text-lg font-bold">
-          Email:
+          Correo:
           {{ paginationConfig.itemsProcessed + emailSelectedIdex + 1 }}
           /
           {{ pagination.total }}

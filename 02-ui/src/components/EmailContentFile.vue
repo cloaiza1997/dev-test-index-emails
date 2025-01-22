@@ -55,13 +55,6 @@ export default {
         allHighlight.push(...value)
       })
 
-      console.log(
-        this.data,
-        email?.xTo,
-        allHighlight,
-        replaceHighlight(fileContent.join('</br>'), allHighlight),
-      )
-
       return replaceHighlight(fileContent.join('</br>'), allHighlight)
     },
   },

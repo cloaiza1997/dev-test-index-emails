@@ -1,13 +1,12 @@
 import axios, { type AxiosResponse } from 'axios'
 
+import { environment } from '@/config/environment'
 import type { EmailSearchResponseInterface } from '@/interfaces/email.interface'
 import type { HttpResponseInterface } from '@/interfaces/http.interface'
 
-const HOST = 'http://localhost:8000'
-
 export function searchEmails(term: string, page: number, limit: number) {
   return axios
-    .get<HttpResponseInterface<EmailSearchResponseInterface>>(`${HOST}/v1/emails`, {
+    .get<HttpResponseInterface<EmailSearchResponseInterface>>(`${environment.HOST}/v1/emails`, {
       params: {
         term,
         page,

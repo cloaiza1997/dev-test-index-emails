@@ -12,23 +12,39 @@ export function replaceHighlight(
   text: string | null | undefined,
   highlights: string[] | null | undefined,
 ) {
-  let result = text?.replace(/\n/gim, '</br>') ?? ''
+  let result = text?.replace(/(\r)?\n/gim, '</br>') ?? ''
 
   if (!highlights) {
     return result
   }
 
-  highlights.forEach((highlight) => {
-    const _highlight = highlight
-      .replace(/…/gim, '')
-      .replace(/\n/gim, '</br>')
-      .replace(/&lt;/gim, '<')
-      .replace(/&gt;/gim, '>')
+  result = decodeHtmlEntities(result)
 
-    const searchValue = _highlight.replace(/<mark>|<\/mark>/gim, '').trim()
+  highlights.forEach((highlight) => {
+    const _highlight = decodeHtmlEntities(
+      highlight.replace(/…/gim, '').replace(/(\r)?\n/gim, '</br>'),
+    ).trim()
+
+    const searchValue = _highlight.replace(/<mark>|<\/mark>/gim, '')
 
     result = result.replace(searchValue, _highlight)
   })
 
   return result
+    .replace(/<mark>/gim, '+[+mark+]+')
+    .replace(/<\/mark>/gim, '+[+/mark+]+')
+    .replace(/<strong>/gim, '+[+strong+]+')
+    .replace(/<\/strong>/gim, '+[+/strong+]+')
+    .replace(/<\/br>/gim, '+[+/br+]+')
+    .replace(/</gim, '&lt;')
+    .replace(/>/gim, '&gt;')
+    .replace(/\+\[\+/gim, '<')
+    .replace(/\+\]\+/gim, '>')
+}
+
+function decodeHtmlEntities(text: string) {
+  const textArea = document.createElement('textarea')
+  textArea.innerHTML = text
+
+  return textArea.value
 }
