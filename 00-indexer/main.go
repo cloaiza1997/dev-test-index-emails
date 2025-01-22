@@ -8,7 +8,7 @@ import (
 
 func main() {
 	index := flag.String("i", "emails", "Index emails")
-	mailDir := flag.String("p", "./mock/maildir", "Mail directory path")
+	mailDir := flag.String("p", "./mock/email-data/maildir", "Mail directory path")
 	routines := flag.Int("r", 10, "Routines to use")
 	indexByBatch := flag.Bool("b", true, "Index by batch")
 	batchSize := flag.Int("s", 10000, "Batch size")
