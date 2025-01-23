@@ -1,6 +1,6 @@
 <template>
   <span
-    class="overflow-hidden flex items-center justify-center leading-none font-bold text-lg border rounded-full min-w-10 min-h-10 max-w-10 max-h-10 bg-white"
+    class="overflow-hidden flex items-center justify-center leading-none font-bold text-lg border rounded-full min-w-12 min-h-12 max-w-12 max-h-12 bg-white"
   >
     <img
       v-if="text"

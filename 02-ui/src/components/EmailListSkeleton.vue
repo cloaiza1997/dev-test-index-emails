@@ -3,14 +3,14 @@ import SkeletonItem from './SkeletonItem.vue'
 </script>
 
 <template>
-  <ul class="flex flex-1 flex-col h-full w-full bg-red-200">
+  <ul class="flex flex-1 flex-col h-full w-full bg-white">
     <li
       v-for="(_, index) in emails"
       :key="index"
       class="flex gap-2 p-2 w-full"
       :class="{ 'border-b': index + 1 < emails.length }"
     >
-      <span class="overflow-hidden rounded-full min-w-10 min-h-10 max-w-10 max-h-10">
+      <span class="overflow-hidden rounded-full min-w-12 min-h-12 max-w-12 max-h-12">
         <SkeletonItem />
       </span>
 
@@ -25,7 +25,7 @@ import SkeletonItem from './SkeletonItem.vue'
           </p>
         </div>
 
-        <p class="overflow-hidden rounded-full w-3/5 my-[2px] h-[16px]">
+        <p class="overflow-hidden rounded-full w-3/5 my-[4px] h-[16px]">
           <SkeletonItem />
         </p>
       </div>

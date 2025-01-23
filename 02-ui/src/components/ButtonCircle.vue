@@ -4,13 +4,15 @@ import ImageIcon from './ImageIcon.vue'
 
 <template>
   <button
-    class="flex items-center justify-center rounded-full min-w-10 w-10 min-h-10 h-10"
+    class="flex items-center justify-center rounded-full min-w-10 w-10 min-h-10 h-10 shadow-2xl"
     :class="[
       disabled
-        ? 'cursor-not-allowed pointer-events-none bg-gray-300'
+        ? 'cursor-not-allowed pointer-events-none bg-gray-400 opacity-50'
         : pressed
           ? 'bg-orange-300 hover:bg-orange-400'
-          : 'bg-blue-300 hover:bg-blue-500',
+          : close
+            ? 'bg-red-300 hover:bg-red-400'
+            : 'bg-primary-400 hover:bg-primary-600',
     ]"
     :disabled="disabled"
     :title="title"
@@ -37,6 +39,9 @@ export default {
       required: true,
     },
     pressed: {
+      type: Boolean,
+    },
+    close: {
       type: Boolean,
     },
     title: {

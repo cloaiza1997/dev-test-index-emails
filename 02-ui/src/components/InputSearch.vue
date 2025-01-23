@@ -5,9 +5,9 @@ import ImageIcon from './ImageIcon.vue'
 
 <template>
   <div
-    class="flex gap-2 items-center border border-gray-400 focus:border-gray-700 rounded-full overflow-hidden pl-5 pr-1 py-1 w-full min-h-[50px]"
+    class="bg-white focus-within:shadow-lg shadow-md flex gap-2 items-center rounded-full overflow-hidden pl-5 pr-1 py-1 w-full min-h-[50px]"
   >
-    <ImageIcon icon="search.svg" alt="search" class-name="w-4 h-4" />
+    <ImageIcon icon="search.svg" alt="search" class-name="opacity-55 w-4 h-4" />
 
     <input
       ref="inputSearch"
@@ -25,6 +25,7 @@ import ImageIcon from './ImageIcon.vue'
       title="Limpiar búsqueda"
       :click="clean"
       :disabled="disabled"
+      :close="true"
     />
   </div>
 </template>

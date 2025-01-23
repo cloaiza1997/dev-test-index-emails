@@ -8,7 +8,7 @@ import type { EmailHighlightInterface } from '@/interfaces/email.interface'
   <div class="flex gap-2 p-2 w-full">
     <AvatarImage :text="data.email.from" />
 
-    <div class="overflow-hidden flex flex-col justify-between w-full h-auto">
+    <div class="overflow-hidden flex flex-col justify-between gap-1 w-full h-auto">
       <div class="flex items-center justify-between">
         <p class="text-sm truncate leading-tight" v-html="getFrom"></p>
 
@@ -17,7 +17,7 @@ import type { EmailHighlightInterface } from '@/interfaces/email.interface'
         </p>
       </div>
 
-      <p class="text-left truncate leading-tight" v-html="getSubject"></p>
+      <p class="text-left truncate" v-html="getSubject"></p>
     </div>
   </div>
 </template>

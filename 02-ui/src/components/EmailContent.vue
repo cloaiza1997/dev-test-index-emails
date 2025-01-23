@@ -7,13 +7,13 @@ import type { EmailHighlightInterface } from '@/interfaces/email.interface'
 
 <template>
   <div class="overflow-hidden flex flex-col gap-4 w-full h-full">
-    <section class="flex flex-col p-4 rounded-2xl text-sm sm:text-base bg-blue-400">
+    <section class="flex flex-col p-4 rounded-xl text-sm sm:text-base bg-secondary-900 text-white">
       <h3>{{ getDate(data?.email.date) }}</h3>
 
       <h2 class="font-bold break-all" v-html="getSubject"></h2>
     </section>
 
-    <section class="overflow-hidden flex flex-col flex-1 rounded-2xl h-full bg-blue-300">
+    <section class="overflow-hidden flex flex-col flex-1 rounded-xl h-full bg-primary-200">
       <div ref="emailContent" class="overflow-auto flex flex-col flex-1 h-full w-full">
         <div class="flex gap-2 p-4">
           <AvatarImage :text="data?.email.from" />

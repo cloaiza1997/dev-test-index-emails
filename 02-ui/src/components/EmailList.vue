@@ -6,6 +6,7 @@ import EmailContentFile from './EmailContentFile.vue'
 import EmailListItem from './EmailListItem.vue'
 import EmailListSkeleton from './EmailListSkeleton.vue'
 import EmailViewSkeleton from './EmailViewSkeleton.vue'
+import ImageIcon from './ImageIcon.vue'
 import InputSearch from './InputSearch.vue'
 import type { EmailHighlightInterface, PaginationInterface } from '@/interfaces/email.interface'
 </script>
@@ -13,14 +14,14 @@ import type { EmailHighlightInterface, PaginationInterface } from '@/interfaces/
 <template>
   <EmailViewSkeleton v-if="skeleton" />
 
-  <div v-else class="overflow-hidden flex flex-1 gap-3 w-full h-full">
+  <div v-else class="overflow-hidden flex flex-1 gap-4 px-4 pb-4 w-full h-full">
     <section
       class="flex-col gap-4 h-full w-full md:w-72 lg:w-1/3"
       :class="[emailSelected ? 'hidden md:flex' : 'flex']"
     >
       <InputSearch @init-search="onSearchEmails" :disabled="loading" />
 
-      <div class="overflow-hidden rounded-2xl h-full w-full bg-red-200">
+      <div class="overflow-hidden rounded-xl h-full w-full bg-white shadow-xl">
         <EmailListSkeleton v-if="loading" />
 
         <template v-else>
@@ -35,12 +36,12 @@ import type { EmailHighlightInterface, PaginationInterface } from '@/interfaces/
             <li
               v-for="(data, index) in emails"
               :key="data.email.messageId"
-              :class="{
-                'bg-red-400 email-selected':
-                  emailSelectedIdex === index &&
-                  data.email.messageId === emailSelected?.email.messageId,
-              }"
-              class="hover:bg-red-300"
+              :class="[
+                emailSelectedIdex === index &&
+                data.email.messageId === emailSelected?.email.messageId
+                  ? 'bg-primary-200 hover:bg-primary-300 email-selected'
+                  : 'hover:bg-primary-100 hover:bg-opacity-60',
+              ]"
             >
               <button class="border-b w-full" @click="setEmailSelected(index, data)">
                 <EmailListItem :data="data" />
@@ -50,7 +51,7 @@ import type { EmailHighlightInterface, PaginationInterface } from '@/interfaces/
         </template>
       </div>
 
-      <div v-if="emails.length > 0" class="flex items-center justify-between w-full">
+      <div v-if="emails.length > 0" class="flex items-center justify-between text-sm w-full">
         <template v-if="pagination.pages > 1">
           <ButtonCircle
             icon="arrow-left.svg"
@@ -59,10 +60,10 @@ import type { EmailHighlightInterface, PaginationInterface } from '@/interfaces/
             :click="() => changePage(-1)"
           />
 
-          <div class="flex flex-col gap-1 items-center justify-center text-sm text-center">
-            <p>Página {{ paginationConfig.page }} de {{ pagination.pages }}</p>
+          <div class="flex flex-col gap-1 items-center justify-center text-center">
+            <p class="text-sm">Página {{ paginationConfig.page }} de {{ pagination.pages }}</p>
 
-            <p>
+            <p class="text-sm">
               {{ paginationConfig.itemsProcessed + 1 }}
               -
               {{ paginationConfig.itemsProcessed + pagination.count }}
@@ -128,6 +129,7 @@ import type { EmailHighlightInterface, PaginationInterface } from '@/interfaces/
             title="Cerrar"
             :click="() => setEmailSelected(0, null)"
             :disabled="loading"
+            :close="true"
           />
         </div>
       </div>
@@ -138,7 +140,12 @@ import type { EmailHighlightInterface, PaginationInterface } from '@/interfaces/
         <EmailContent v-else :data="emailSelected" />
       </template>
 
-      <div v-else class="flex items-center justify-center rounded-2xl w-full h-full bg-gray-400">
+      <div
+        v-else
+        class="flex flex-col gap-5 items-center justify-center rounded-xl text-lg font-bold p-4 w-full h-full bg-gray-300 opacity-80"
+      >
+        <ImageIcon icon="email.svg" alt="email" class-name="w-24 h-24" />
+
         <h3>Selecciona un correo para visualizar su contenido.</h3>
       </div>
     </section>

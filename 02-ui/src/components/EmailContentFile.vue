@@ -4,11 +4,11 @@ import type { EmailHighlightInterface } from '@/interfaces/email.interface'
 </script>
 
 <template>
-  <section class="overflow-hidden flex flex-1 rounded-2xl w-full h-full bg-blue-300">
+  <section class="overflow-hidden flex flex-1 rounded-xl w-full h-full bg-secondary-300">
     <p
       ref="emailContent"
       v-html="getFileContent"
-      class="overflow-auto p-4 font-serif text-sm sm:text-base break-all w-full"
+      class="overflow-auto p-4 font-mono text-sm sm:text-base break-all w-full text-gray-100"
     ></p>
   </section>
 </template>
