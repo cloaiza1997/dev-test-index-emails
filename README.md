@@ -69,7 +69,7 @@ tar -xvzf enron_mail_20110402.tgz
 cd ../../../
 ```
 
-2. En los siguientes archivos buscar y reemplazar `<_IP_ADDRESS_>` por la url con la ip del equipo en donde se va a ejecutar el proyecto. Esto para permitir la comunicación entre los diferentes contenedores que se crean.
+2. En los siguientes archivos buscar y reemplazar `<_IP_ADDRESS_>` por la url con el ip del equipo en donde se va a ejecutar el proyecto. Esto para permitir la comunicación entre los diferentes contenedores que se crean.
 
    - [docker-compose.yml](/docker-compose.yml)
    - [02-ui/src/config/environment.ts](/02-ui/src/config/environment.ts): En caso de ser requerido. Por defecto usa [http://localhost:8080/](http://localhost:8080/).
