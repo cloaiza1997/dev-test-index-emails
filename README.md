@@ -72,13 +72,11 @@ cd ../../../
 2. En los siguientes archivos buscar y reemplazar `<_IP_ADDRESS_>` por la url con la ip del equipo en donde se va a ejecutar el proyecto. Esto para permitir la comunicación entre los diferentes contenedores que se crean.
 
    - [docker-compose.yml](/docker-compose.yml)
-   - [02-ui/src/config/environment.ts](/02-ui/src/config/environment.ts): En caso de ser requerido, por defecto usa [http://localhost:8080/](http://localhost:8080/).
+   - [02-ui/src/config/environment.ts](/02-ui/src/config/environment.ts): En caso de ser requerido. Por defecto usa [http://localhost:8080/](http://localhost:8080/).
 
 ```JavaScript
-export const environment = {
-  // HOST: '<_IP_ADDRESS_>:8080',
-  HOST: 'http://192.168.0.1:8080'
-}
+  // const HOST: '<_IP_ADDRESS_>:8080',
+  const HOST: 'http://192.168.0.1:8080'
 ```
 
 3. Desde la raíz del proyecto subir todos los servicios ejecutar el archivo [docker-compose.yml](/docker-compose.yml).
