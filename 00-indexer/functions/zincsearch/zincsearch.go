@@ -9,8 +9,8 @@ import (
 	utils "github.com/cloaiza1997/dev-test-tr-emails/functions/utils"
 )
 
-var ZS_USER = os.Getenv("EMAIL_INDEX_ZS_USER")
-var ZS_PASS = os.Getenv("EMAIL_INDEX_ZS_PASS")
+var ZS_USER = os.Getenv("ZINC_FIRST_ADMIN_USER")
+var ZS_PASS = os.Getenv("ZINC_FIRST_ADMIN_PASSWORD")
 var ZS_HOST = os.Getenv("EMAIL_INDEX_ZS_HOST")
 
 type Bulk[T any] struct {

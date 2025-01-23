@@ -13,7 +13,7 @@ type Config struct {
 var ApiConfig = Config{
 	Port:      os.Getenv("EMAIL_INDEX_API_PORT"),
 	ZincHost:  os.Getenv("EMAIL_INDEX_ZS_HOST"),
-	ZincUser:  os.Getenv("EMAIL_INDEX_ZS_USER"),
-	ZincPass:  os.Getenv("EMAIL_INDEX_ZS_PASS"),
+	ZincUser:  os.Getenv("ZINC_FIRST_ADMIN_USER"),
+	ZincPass:  os.Getenv("ZINC_FIRST_ADMIN_PASSWORD"),
 	ZincIndex: "emails",
 }

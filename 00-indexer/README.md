@@ -16,8 +16,8 @@ TODO... Configuración, Valores por defecto
 - Agregar las variables de entorno:
 
   - `EMAIL_INDEX_ZS_HOST`: Host donde se aloja ZincSearch
-  - `EMAIL_INDEX_ZS_USER`: Usuario configurado en ZincSearch
-  - `EMAIL_INDEX_ZS_PASS`: Contraseña del usuario
+  - `ZINC_FIRST_ADMIN_USER`: Usuario configurado en ZincSearch
+  - `ZINC_FIRST_ADMIN_PASSWORD`: Contraseña del usuario
 
 ## Flags
 
