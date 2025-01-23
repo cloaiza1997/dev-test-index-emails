@@ -29,7 +29,7 @@ Sistema que permite indexar, visualizar y buscar en una base de datos de correos
 ![mobile-03](/assets/mobile-03.png)
 ![mobile-04](/assets/mobile-04.png)
 
-## Variables de entonor
+## Variables de entorno
 
 Para ejecutar el proyecto de forma manual y local, se deben de crear las siguientes variables de entorno. Sus valores están en el archivo [docker-compose.yml](/docker-compose.yml).
 
@@ -79,7 +79,7 @@ cd ../../../
   const HOST: 'http://192.168.0.1:8080'
 ```
 
-3. Desde la raíz del proyecto subir todos los servicios ejecutar el archivo [docker-compose.yml](/docker-compose.yml).
+3. Desde la raíz del proyecto para iniciar todos los servicios ejecutar el archivo [docker-compose.yml](/docker-compose.yml).
 
 ```Shell
 docker-compose up -d --build
