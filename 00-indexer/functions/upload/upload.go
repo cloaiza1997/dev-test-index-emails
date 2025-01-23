@@ -11,12 +11,11 @@ import (
 	zs "github.com/cloaiza1997/dev-test-tr-emails/functions/zincsearch"
 )
 
-const INDEX_STRUCTURE = "./data/index-structure.json"
-
 type UploadOptions struct {
 	BatchSize    int
 	Index        string
 	IndexByBatch bool
+	IndexJson    string
 	MailDir      string
 	Routines     int
 }
@@ -43,21 +42,21 @@ func getErrorMessage(err any) string {
 	return fmt.Sprintf("Error proccessing emails => %v", err)
 }
 
-func handleIndex(index string) error {
-	exists, err := zs.ValidateIndexExists(index)
+func handleIndex(options UploadOptions) error {
+	exists, err := zs.ValidateIndexExists(options.Index)
 
 	if err != nil {
 		return err
 	}
 
 	if !exists {
-		data, err := utils.GetJsonData[zs.IndexStructure](INDEX_STRUCTURE)
+		data, err := utils.GetJsonData[zs.IndexStructure](options.IndexJson)
 
 		if err != nil {
 			return err
 		}
 
-		data.Name = index
+		data.Name = options.Index
 
 		ok, err := zs.CreateIndex(data)
 
@@ -80,7 +79,7 @@ func handleReturnError(message string) (bool, int, int, []string) {
 }
 
 func uploadEmails(options UploadOptions) (bool, int, int, []string) {
-	err := handleIndex(options.Index)
+	err := handleIndex(options)
 
 	if err != nil {
 		return handleReturnError(getErrorMessage(err))

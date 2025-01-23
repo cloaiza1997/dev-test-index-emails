@@ -9,7 +9,8 @@ import (
 func TestProcessData(t *testing.T) {
 	upload.InitUpload(upload.UploadOptions{
 		Index:        "test-emails",
-		MailDir:      "../mock/maildir",
+		MailDir:      "../mock/email-data/maildir",
+		IndexJson:    "../data/index-structure.json",
 		Routines:     10,
 		IndexByBatch: true,
 		BatchSize:    10000,

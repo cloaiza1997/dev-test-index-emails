@@ -173,11 +173,18 @@ go tool pprof --http=:8084 prof/block.out
 - Generar PDF
 
 ```Shell
-go tool pprof prof/cpu.out
-go tool pprof prof/mem.out
-go tool pprof prof/mutex.out
-go tool pprof prof/block.out
+go tool pprof prof/cpu.out # >> pdf
+go tool pprof prof/mem.out # >> pdf
+go tool pprof prof/mutex.out # >> pdf
+go tool pprof prof/block.out # >> pdf
 ```
+
+- Archivos generados de profiling
+
+  - [block.pdf](/00-indexer/test/prof/block.pdf)
+  - [cpu.pdf](/00-indexer/test/prof/cpu.pdf)
+  - [mem.pdf](/00-indexer/test/prof/mem.pdf)
+  - [mutex.pdf](/00-indexer/test/prof/mutex.pdf)
 
 ---
 

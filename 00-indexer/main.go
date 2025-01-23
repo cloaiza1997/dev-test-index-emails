@@ -21,5 +21,6 @@ func main() {
 		Routines:     *routines,
 		IndexByBatch: *indexByBatch,
 		BatchSize:    *batchSize,
+		IndexJson:    "./data/index-structure.json",
 	})
 }
