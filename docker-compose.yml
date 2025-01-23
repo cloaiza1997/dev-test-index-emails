@@ -1,0 +1,53 @@
+version: "3.9"
+
+services:
+  zincsearch:
+    image: public.ecr.aws/zinclabs/zincsearch:latest
+    container_name: dev-test-tr-zincsearch
+    ports:
+      - "4080:4080"
+    environment:
+      - ZINC_FIRST_ADMIN_USER=root
+      - ZINC_FIRST_ADMIN_PASSWORD=root
+    volumes:
+      - ./00-indexer/mock/zincsearch-data:/data
+
+  indexer:
+    build:
+      context: ./00-indexer
+      dockerfile: ci-cd/Dockerfile
+    container_name: dev-test-tr-indexer
+    volumes:
+      - ./00-indexer/mock/email-data:/app/mock/email-data
+    stdin_open: true
+    tty: true
+    environment:
+      - EMAIL_INDEX_ZS_HOST=<_IP_ADDRESS_>:4080/api
+      - ZINC_FIRST_ADMIN_USER=root
+      - ZINC_FIRST_ADMIN_PASSWORD=root
+
+  api:
+    build:
+      context: ./01-api
+      dockerfile: ci-cd/Dockerfile
+    container_name: dev-test-tr-api
+    ports:
+      - "8080:8080"
+    environment:
+      - EMAIL_INDEX_API_PORT=8080
+      - EMAIL_INDEX_ZS_HOST=<_IP_ADDRESS_>:4080/api
+      - ZINC_FIRST_ADMIN_USER=root
+      - ZINC_FIRST_ADMIN_PASSWORD=root
+
+  ui:
+    build:
+      context: ./02-ui
+      dockerfile: ci-cd/Dockerfile
+    container_name: dev-test-tr-ui
+    ports:
+      - "3000:80"
+    volumes:
+      - ./02-ui/ci-cd/nginx.conf:/etc/nginx/conf.d/default.conf
+
+volumes:
+  zinc_data:
