@@ -98,13 +98,13 @@ docker-compose up -d --build
 
 ```Shell
 # Ejecuta la indexación con los valores por defecto y la base de datos de prueba
-docker exec -it dev-test-tr-indexer ./00-indexer
+docker exec -it test-indexer ./00-indexer
 ```
 
 ```Shell
 # Ejecuta la indexación de la base de datos completa
 # Esto puede tardar entre 15 y 20 minutos según los recursos del equipo
-docker exec -it dev-test-tr-indexer ./00-indexer --p=./mock/email-data/enron_mail_20110402
+docker exec -it test-indexer ./00-indexer --p=./mock/email-data/enron_mail_20110402
 ```
 
 ---
