@@ -8,7 +8,7 @@ import (
 	"net/http"
 	"strconv"
 
-	"github.com/cloaiza1997/dev-test-tr-emails/src/models"
+	"github.com/cloaiza1997/dev-test-index-emails/src/models"
 )
 
 func DoResponse(w http.ResponseWriter, status int, data interface{}, err error) {

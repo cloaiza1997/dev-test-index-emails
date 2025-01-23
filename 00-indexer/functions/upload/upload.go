@@ -5,10 +5,10 @@ import (
 	"sync"
 	"time"
 
-	email "github.com/cloaiza1997/dev-test-tr-emails/functions/emails"
-	fs "github.com/cloaiza1997/dev-test-tr-emails/functions/files"
-	utils "github.com/cloaiza1997/dev-test-tr-emails/functions/utils"
-	zs "github.com/cloaiza1997/dev-test-tr-emails/functions/zincsearch"
+	email "github.com/cloaiza1997/dev-test-index-emails/functions/emails"
+	fs "github.com/cloaiza1997/dev-test-index-emails/functions/files"
+	utils "github.com/cloaiza1997/dev-test-index-emails/functions/utils"
+	zs "github.com/cloaiza1997/dev-test-index-emails/functions/zincsearch"
 )
 
 type UploadOptions struct {

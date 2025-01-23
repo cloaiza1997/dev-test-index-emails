@@ -6,7 +6,7 @@ import (
 	"sync"
 	"time"
 
-	utils "github.com/cloaiza1997/dev-test-tr-emails/functions/utils"
+	utils "github.com/cloaiza1997/dev-test-index-emails/functions/utils"
 )
 
 var ZS_USER = os.Getenv("ZINC_FIRST_ADMIN_USER")

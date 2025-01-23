@@ -3,9 +3,9 @@ package controllers
 import (
 	"net/http"
 
-	"github.com/cloaiza1997/dev-test-tr-emails/src/models"
-	"github.com/cloaiza1997/dev-test-tr-emails/src/services"
-	"github.com/cloaiza1997/dev-test-tr-emails/src/utils"
+	"github.com/cloaiza1997/dev-test-index-emails/src/models"
+	"github.com/cloaiza1997/dev-test-index-emails/src/services"
+	"github.com/cloaiza1997/dev-test-index-emails/src/utils"
 )
 
 var zs = services.ZincSearchRepository{}

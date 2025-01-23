@@ -3,7 +3,7 @@ package main
 import (
 	"flag"
 
-	upload "github.com/cloaiza1997/dev-test-tr-emails/functions/upload"
+	upload "github.com/cloaiza1997/dev-test-index-emails/functions/upload"
 )
 
 func main() {

@@ -8,8 +8,8 @@ import (
 	"github.com/go-chi/chi/v5"
 	"github.com/go-chi/chi/v5/middleware"
 
-	"github.com/cloaiza1997/dev-test-tr-emails/config"
-	"github.com/cloaiza1997/dev-test-tr-emails/src/controllers"
+	"github.com/cloaiza1997/dev-test-index-emails/config"
+	"github.com/cloaiza1997/dev-test-index-emails/src/controllers"
 )
 
 func Start() {

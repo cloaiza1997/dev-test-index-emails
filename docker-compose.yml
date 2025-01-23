@@ -3,7 +3,7 @@ version: "3.9"
 services:
   zincsearch:
     image: public.ecr.aws/zinclabs/zincsearch:latest
-    container_name: dev-test-tr-zincsearch
+    container_name: test-zincsearch
     ports:
       - "4080:4080"
     environment:
@@ -16,7 +16,7 @@ services:
     build:
       context: ./00-indexer
       dockerfile: ci-cd/Dockerfile
-    container_name: dev-test-tr-indexer
+    container_name: test-indexer
     volumes:
       - ./00-indexer/mock/email-data:/app/mock/email-data
     stdin_open: true
@@ -30,7 +30,7 @@ services:
     build:
       context: ./01-api
       dockerfile: ci-cd/Dockerfile
-    container_name: dev-test-tr-api
+    container_name: test-api
     ports:
       - "8080:8080"
     environment:
@@ -43,7 +43,7 @@ services:
     build:
       context: ./02-ui
       dockerfile: ci-cd/Dockerfile
-    container_name: dev-test-tr-ui
+    container_name: test-ui
     ports:
       - "3000:80"
     volumes:
