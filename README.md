@@ -145,6 +145,11 @@ go build --o indexer.exe
 ./indexer.exe --i=emails --p=./mock/email-data/maildir --r=10 --b=true --s=10000
 ```
 
+## Pruebas
+
+- [Pruebas Locales](/00-indexer/test/test-local.txt): Logs de las pruebas realizadas ejecutando el indexador directamente en el equipo, usando ZincSearch en docker.
+- [Pruebas Docker](/00-indexer/test/test-docker-compose.txt): Logs de las pruebas realizadas ejecutando el indexador y ZincSearch desde docker.
+
 ## Profiling
 
 Para visualizar gráficamente el reporte se debe de instalar la herramienta [Graphviz](https://graphviz.org/download/).
