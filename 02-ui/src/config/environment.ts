@@ -1,3 +1,3 @@
 export const environment = {
-  HOST: '<_IP_ADDRESS_>:8080',
+  HOST: 'http://localhost:8080',
 }
