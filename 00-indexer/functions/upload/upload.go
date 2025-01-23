@@ -7,7 +7,7 @@ import (
 
 	email "github.com/cloaiza1997/dev-test-tr-emails/functions/emails"
 	fs "github.com/cloaiza1997/dev-test-tr-emails/functions/files"
-	util "github.com/cloaiza1997/dev-test-tr-emails/functions/utils"
+	utils "github.com/cloaiza1997/dev-test-tr-emails/functions/utils"
 	zs "github.com/cloaiza1997/dev-test-tr-emails/functions/zincsearch"
 )
 
@@ -22,19 +22,19 @@ type UploadOptions struct {
 }
 
 func InitUpload(options UploadOptions) {
-	startTime, startTimeFormated := util.FormatTime()
+	startTime, startTimeFormated := utils.FormatTime()
 
 	fmt.Printf("%s - Start indexing emails (Emails=%s, Batch=%t)...\n", startTimeFormated, options.MailDir, options.IndexByBatch)
 
 	ok, successCount, errorCount, logs := uploadEmails(options)
 
 	for i, log := range logs {
-		fmt.Println(i, log)
+		utils.Log(fmt.Sprintf("[%d] %s", i, log))
 	}
 
 	duration := time.Since(startTime)
 
-	_, endTimeFormated := util.FormatTime()
+	_, endTimeFormated := utils.FormatTime()
 
 	fmt.Printf("%s - Duration: %v => Ok: %t | Parsed Success: %d | Parsed Error: %d\n", endTimeFormated, duration, ok, successCount, errorCount)
 }
@@ -51,7 +51,7 @@ func handleIndex(index string) error {
 	}
 
 	if !exists {
-		data, err := util.GetJsonData[zs.IndexStructure](INDEX_STRUCTURE)
+		data, err := utils.GetJsonData[zs.IndexStructure](INDEX_STRUCTURE)
 
 		if err != nil {
 			return err
@@ -74,7 +74,7 @@ func handleIndex(index string) error {
 }
 
 func handleReturnError(message string) (bool, int, int, []string) {
-	fmt.Println(message)
+	utils.Log(message)
 
 	return false, 0, 0, []string{}
 }
@@ -85,6 +85,8 @@ func uploadEmails(options UploadOptions) (bool, int, int, []string) {
 	if err != nil {
 		return handleReturnError(getErrorMessage(err))
 	}
+
+	utils.Log("Count files ...")
 
 	batchEmails := [][]email.Email{}
 	emails := []email.Email{}
@@ -106,7 +108,8 @@ func uploadEmails(options UploadOptions) (bool, int, int, []string) {
 		return handleReturnError(getErrorMessage(errCount))
 	}
 
-	fmt.Printf("Total emails: %d\n", totalEmails)
+	utils.Log((fmt.Sprintf("Total emails: %d", totalEmails)))
+	utils.Log("Processing files ...")
 
 	errMails := fs.WalkFilePath(options.MailDir, func(path string) {
 		email.HandleFile(email.HandleFileOptions{
@@ -133,7 +136,7 @@ func uploadEmails(options UploadOptions) (bool, int, int, []string) {
 	}
 
 	if len(emailErrors) > 0 {
-		fmt.Println(getErrorMessage(emailErrors))
+		utils.Log(getErrorMessage(emailErrors))
 	}
 
 	zs.IndexBatchZincSearch(options.Index, batchEmails, &zincSearchLogs, &wg, emailsCh)

@@ -8,6 +8,8 @@ import (
 	"os"
 	"strings"
 	"sync"
+
+	utils "github.com/cloaiza1997/dev-test-tr-emails/functions/utils"
 )
 
 type Email struct {
@@ -82,7 +84,7 @@ func HandleFile(options HandleFileOptions) {
 		isLast := *options.TotalEmailProcessed == *options.TotalEmails
 
 		if *options.TotalEmailProcessed%options.BatchSize == 0 || isLast {
-			fmt.Printf("Batch %d (%d, %d) ...\n", *options.TotalBatch, *options.TotalEmailProcessed, *options.TotalEmailBatch)
+			utils.Log(fmt.Sprintf("Batch %d (%d, %d) ...", *options.TotalBatch, *options.TotalEmailProcessed, *options.TotalEmailBatch))
 
 			*options.TotalBatch++
 			*options.TotalEmailBatch = 0

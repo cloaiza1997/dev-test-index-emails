@@ -49,7 +49,7 @@ func BulkRecords[T any](index string, records []T, zincSearchLogs *[]string) {
 }
 
 func CreateIndex(data IndexStructure) (bool, error) {
-	fmt.Println("ZincSearch create index...")
+	utils.Log("ZincSearch create index...")
 
 	response, err := utils.NewRequest(utils.Request{
 		Method: "POST",
@@ -89,11 +89,11 @@ func IndexBatchZincSearch[T any](index string, batchEmails [][]T, zincSearchLogs
 
 	duration := time.Since(startTime)
 
-	fmt.Println("Duration uploading emails:", duration)
+	utils.Log(fmt.Sprintf("Duration uploading emails: %v", duration))
 }
 
 func ValidateIndexExists(index string) (bool, error) {
-	fmt.Println("ZincSearch validate index...")
+	utils.Log("ZincSearch validate index...")
 
 	response, err := utils.NewRequest(utils.Request{
 		Method: "GET",
@@ -112,7 +112,7 @@ func ValidateIndexExists(index string) (bool, error) {
 }
 
 func bulkBatch[T any](data Bulk[T]) (bool, string) {
-	fmt.Println("ZincSearch bulk upload...")
+	utils.Log("ZincSearch bulk upload...")
 
 	startTime := time.Now()
 

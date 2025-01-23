@@ -24,7 +24,7 @@ type RequestAuth struct {
 func FormatTime() (time.Time, string) {
 	now := time.Now()
 
-	return now, now.Format("2006-01-02 15:04:05")
+	return now, now.Format("2006-01-02 15:04:05.000")
 }
 
 func GetJsonData[T any](filepath string) (T, error) {
@@ -46,6 +46,12 @@ func GetJsonData[T any](filepath string) (T, error) {
 	}
 
 	return indexerData, nil
+}
+
+func Log(message string) {
+	_, timeFormated := FormatTime()
+
+	fmt.Printf("%s - %s\n", timeFormated, message)
 }
 
 func NewRequest(options Request) (http.Response, error) {
