@@ -1,0 +1,374 @@
+{
+  "info": {
+    "_postman_id": "7ceff224-d831-4f65-afe0-c5deaab4008e",
+    "name": "dev-test-tr-emails",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "_exporter_id": "11534911"
+  },
+  "item": [
+    {
+      "name": "emails",
+      "protocolProfileBehavior": {
+        "disableBodyPruning": true
+      },
+      "request": {
+        "method": "GET",
+        "header": [],
+        "body": {
+          "mode": "raw",
+          "raw": "",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        },
+        "url": {
+          "raw": "http://localhost:8080/v1/emails?term=enron&limit=10&page=4",
+          "protocol": "http",
+          "host": ["localhost"],
+          "port": "8080",
+          "path": ["v1", "emails"],
+          "query": [
+            {
+              "key": "term",
+              "value": "enron"
+            },
+            {
+              "key": "limit",
+              "value": "10"
+            },
+            {
+              "key": "page",
+              "value": "4"
+            }
+          ]
+        }
+      },
+      "response": [
+        {
+          "name": "emails",
+          "originalRequest": {
+            "method": "GET",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "http://localhost:8080/v1/emails?term=enron&limit=10&page=4",
+              "protocol": "http",
+              "host": ["localhost"],
+              "port": "8080",
+              "path": ["v1", "emails"],
+              "query": [
+                {
+                  "key": "term",
+                  "value": "enron"
+                },
+                {
+                  "key": "limit",
+                  "value": "10"
+                },
+                {
+                  "key": "page",
+                  "value": "4"
+                }
+              ]
+            }
+          },
+          "status": "OK",
+          "code": 200,
+          "_postman_previewlanguage": "json",
+          "header": [
+            {
+              "key": "Content-Type",
+              "value": "application/json"
+            },
+            {
+              "key": "Date",
+              "value": "Thu, 23 Jan 2025 12:15:47 GMT"
+            },
+            {
+              "key": "Transfer-Encoding",
+              "value": "chunked"
+            }
+          ],
+          "cookie": [],
+          "body": "{\n    \"success\": true,\n    \"message\": \"\",\n    \"data\": {\n        \"pagination\": {\n            \"total\": 51450,\n            \"count\": 10,\n            \"pages\": 5145,\n            \"prev\": 3,\n            \"next\": 5\n        },\n        \"items\": [\n            {\n                \"email\": {\n                    \"messageId\": \"<23746014.1075844819657.JavaMail.evans@thyme>\",\n                    \"date\": \"Thu, 1 Mar 2001 06:35:00 -0800 (PST)\",\n                    \"from\": \"denis.o'connell@enron.com\",\n                    \"to\": \"sara.shackleton@enron.com\",\n                    \"cc\": \"\",\n                    \"bcc\": \"\",\n                    \"subject\": \"Re: R.V.I. Guaranty Co., Ltd., a Bermuda reinsurance company and Continental Insurance Company\",\n                    \"xFrom\": \"Denis O'Connell\",\n                    \"xTo\": \"Sara Shackleton\",\n                    \"xCc\": \"\",\n                    \"xBcc\": \"\",\n                    \"xFolder\": \"\\\\Sara_Shackleton_Dec2000_June2001_2\\\\Notes Folders\\\\Notes inbox\",\n                    \"xOrigin\": \"SHACKLETON-S\",\n                    \"xFileName\": \"sshackle.nsf\",\n                    \"body\": \"Sara - apologies - I thought my original mail to yourself and Jeff\"\n                },\n                \"highlight\": {\n                    \"body\": [\n                        \"…il of 2/27.\\n\\nSara Shackleton\\n<mark>Enron</mark>…\"\n                    ],\n                    \"from\": [\n                        \"denis.o&#39;connell@<mark>enron.com</mark>\"\n                    ],\n                    \"to\": [\n                        \"sara.shackleton@<mark>enron.com</mark>\"\n                    ]\n                }\n            },\n            {\n                \"email\": {\n                    \"messageId\": \"<8935908.1075844819705.JavaMail.evans@thyme>\",\n                    \"date\": \"Thu, 1 Mar 2001 05:38:00 -0800 (PST)\",\n                    \"from\": \"denis.o'connell@enron.com\",\n                    \"to\": \"sara.shackleton@enron.com\",\n                    \"cc\": \"\",\n                    \"bcc\": \"\",\n                    \"subject\": \"Re: R.V.I. Guaranty Co., Ltd., a Bermuda reinsurance company and Continental Insurance Company\",\n                    \"xFrom\": \"Denis O'Connell\",\n                    \"xTo\": \"Sara Shackleton\",\n                    \"xCc\": \"\",\n                    \"xBcc\": \"\",\n                    \"xFolder\": \"\\\\Sara_Shackleton_Dec2000_June2001_2\\\\Notes Folders\\\\Notes inbox\",\n                    \"xOrigin\": \"SHACKLETON-S\",\n                    \"xFileName\": \"sshackle.nsf\",\n                    \"body\": \"Sara - Has this been sent to Bermuda yet ?  - tks Denis\",\n                    \"path\": \"mock/email-data/maildir-25.000/shackleton-s/notes_inbox/3079_\"\n                },\n                \"highlight\": {\n                    \"from\": [\n                        \"denis.o&#39;connell@<mark>enron.com</mark>\"\n                    ],\n                    \"to\": [\n                        \"sara.shackleton@<mark>enron.com</mark>\"\n                    ]\n                }\n            },\n            {\n                \"email\": {\n                    \"messageId\": \"<12004945.1075844819798.JavaMail.evans@thyme>\",\n                    \"date\": \"Wed, 28 Feb 2001 13:34:00 -0800 (PST)\",\n                    \"from\": \"enron.announcements@enron.com\",\n                    \"to\": \"all.worldwide@enron.com\",\n                    \"cc\": \"\",\n                    \"bcc\": \"\",\n                    \"subject\": \"Public Holiday in Singapore - 6 March 2001\",\n                    \"xFrom\": \"Enron Announcements\",\n                    \"xTo\": \"All Enron Worldwide\",\n                    \"xCc\": \"\",\n                    \"xBcc\": \"\",\n                    \"xFolder\": \"\\\\Sara_Shackleton_Dec2000_June2001_2\\\\Notes Folders\\\\Notes inbox\",\n                    \"xOrigin\": \"SHACKLETON-S\",\n                    \"xFileName\": \"sshackle.nsf\",\n                    \"body\": \"Please be advised that the Singapore office will be closed on Tuesday, 6 \\nMarch 2001 being a public holiday for Hari Raya Haji.\\n\\nThank you.\",\n                    \"path\": \"mock/email-data/maildir-25.000/shackleton-s/notes_inbox/3083_\"\n                },\n                \"highlight\": {\n                    \"from\": [\n                        \"<mark>enron.announcements</mark>@<mark>enron.com</mark>\"\n                    ],\n                    \"to\": [\n                        \"all.worldwide@<mark>enron.com</mark>\"\n                    ],\n                    \"xFrom\": [\n                        \"<mark>Enron</mark> Announcements\"\n                    ],\n                    \"xTo\": [\n                        \"All <mark>Enron</mark> Worldwide\"\n                    ]\n                }\n            }\n        ]\n    }\n}"
+        }
+      ]
+    },
+    {
+      "name": "zincsearch",
+      "request": {
+        "method": "POST",
+        "header": [
+          {
+            "key": "Authorization",
+            "value": "Basic YWRtaW46Q29tcGxleHBhc3MjMTIz",
+            "type": "text",
+            "disabled": true
+          }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\r\n    \"search_type\": \"wildcard\",\r\n    \"query\": {\r\n        \"term\": \"cristian\",\r\n        \"start_time\": \"2024-01-15T23:17:52Z\",\r\n        \"end_time\": \"2026-01-16T23:17:52Z\"\r\n    },\r\n    \"from\": 0,\r\n    \"max_results\": 100,\r\n    \"_source\": [\r\n        \"messageId\",\r\n        \"date\",\r\n        \"from\",\r\n        \"to\",\r\n        \"cc\",\r\n        \"bcc\",\r\n        \"subject\",\r\n        \"xFrom\",\r\n        \"xTo\",\r\n        \"xCc\",\r\n        \"xBcc\",\r\n        \"xFolder\",\r\n        \"xOrigin\",\r\n        \"xFileName\",\r\n        \"body\"\r\n    ],\r\n    \"sort_fields\": [\r\n        \"@timestamp\"\r\n    ],\r\n    \"highlight\": {\r\n        \"pre_tags\": [\r\n            \"<pre>\"\r\n        ],\r\n        \"post_tags\": [\r\n            \"</pre>\"\r\n        ],\r\n        \"fields\": {\r\n            \"from\": {},\r\n            \"body\": {},\r\n            \"subject\": {}\r\n        }\r\n    }\r\n}",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        },
+        "url": {
+          "raw": "http://localhost:4080/api/:index/_search",
+          "protocol": "http",
+          "host": ["localhost"],
+          "port": "4080",
+          "path": ["api", ":index", "_search"],
+          "variable": [
+            {
+              "key": "index",
+              "value": "emails"
+            }
+          ]
+        }
+      },
+      "response": [
+        {
+          "name": "zincsearch",
+          "originalRequest": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Basic YWRtaW46Q29tcGxleHBhc3MjMTIz",
+                "type": "text",
+                "disabled": true
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n    \"search_type\": \"wildcard\",\r\n    \"query\": {\r\n        \"term\": \"cristian\",\r\n        \"start_time\": \"2024-01-15T23:17:52Z\",\r\n        \"end_time\": \"2026-01-16T23:17:52Z\"\r\n    },\r\n    \"from\": 0,\r\n    \"max_results\": 100,\r\n    \"_source\": [\r\n        \"messageId\",\r\n        \"date\",\r\n        \"from\",\r\n        \"to\",\r\n        \"cc\",\r\n        \"bcc\",\r\n        \"subject\",\r\n        \"xFrom\",\r\n        \"xTo\",\r\n        \"xCc\",\r\n        \"xBcc\",\r\n        \"xFolder\",\r\n        \"xOrigin\",\r\n        \"xFileName\",\r\n        \"body\"\r\n    ],\r\n    \"sort_fields\": [\r\n        \"@timestamp\"\r\n    ],\r\n    \"highlight\": {\r\n        \"pre_tags\": [\r\n            \"<pre>\"\r\n        ],\r\n        \"post_tags\": [\r\n            \"</pre>\"\r\n        ],\r\n        \"fields\": {\r\n            \"from\": {},\r\n            \"body\": {},\r\n            \"subject\": {}\r\n        }\r\n    }\r\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "http://localhost:4080/api/:index/_search",
+              "protocol": "http",
+              "host": ["localhost"],
+              "port": "4080",
+              "path": ["api", ":index", "_search"],
+              "variable": [
+                {
+                  "key": "index",
+                  "value": "emails"
+                }
+              ]
+            }
+          },
+          "status": "OK",
+          "code": 200,
+          "_postman_previewlanguage": "json",
+          "header": [
+            {
+              "key": "Content-Type",
+              "value": "application/json; charset=utf-8"
+            },
+            {
+              "key": "Zinc",
+              "value": "0.4.10"
+            },
+            {
+              "key": "Date",
+              "value": "Thu, 23 Jan 2025 12:17:36 GMT"
+            },
+            {
+              "key": "Transfer-Encoding",
+              "value": "chunked"
+            }
+          ],
+          "cookie": [],
+          "body": "{\n    \"took\": 6,\n    \"timed_out\": false,\n    \"_shards\": {\n        \"total\": 3,\n        \"successful\": 3,\n        \"skipped\": 0,\n        \"failed\": 0\n    },\n    \"hits\": {\n        \"total\": {\n            \"value\": 48\n        },\n        \"max_score\": 7.105039293753169,\n        \"hits\": [\n            {\n                \"_index\": \"emails\",\n                \"_type\": \"_doc\",\n                \"_id\": \"2f3owwzdts2\",\n                \"_score\": 2.7031764738085258,\n                \"@timestamp\": \"2025-01-23T11:54:34.80477056Z\",\n                \"_source\": {\n                    \"bcc\": \"\",\n                    \"body\": \"I must be on a separate list because\",\n                    \"cc\": \"\",\n                    \"date\": \"Tue, 14 Mar 2000 02:12:00 -0800 (PST)\",\n                    \"from\": \"sara.shackleton@enron.com\",\n                    \"messageId\": \"<15732244.1075844543337.JavaMail.evans@thyme>\",\n                    \"subject\": \"Re: Clipping 03/13/2000\",\n                    \"to\": \"brent.hendry@enron.com\",\n                    \"xBcc\": \"\",\n                    \"xCc\": \"\",\n                    \"xFileName\": \"sshackle.nsf\",\n                    \"xFolder\": \"\\\\Sara_Shackleton_Dec2000_June2001_1\\\\Notes Folders\\\\Sent\",\n                    \"xFrom\": \"Sara Shackleton\",\n                    \"xOrigin\": \"SHACKLETON-S\",\n                    \"xTo\": \"Brent Hendry\"\n                },\n                \"highlight\": {\n                    \"body\": [\n                        \"…\\nFreyre/ENRON_DEVELOPMENT@ENRON_DEVELOPMENT, Julian \\nPoole/ENRON_DEVELOPMENT@ENRON_DEVELOPMENT, <pre>Cristian</pre> \\nFolgar/ENRON_DEVELOPMENT@ENRON_DEVELOPMENT, Brent \\nHendry/ENRON_DEVELOPMENT@ENRON_DEVELOPMENT,…\"\n                    ]\n                }\n            },\n            {\n                \"_index\": \"emails\",\n                \"_type\": \"_doc\",\n                \"_id\": \"2f3owxqRF2a\",\n                \"_score\": 6.747349390808702,\n                \"@timestamp\": \"2025-01-23T11:54:34.99312896Z\",\n                \"_source\": {\n                    \"bcc\": \"\",\n                    \"body\": \"Paul:  Here's the report which I will resurrect.\",\n                    \"cc\": \"\",\n                    \"date\": \"Mon, 10 Jul 2000 06:41:00 -0700 (PDT)\",\n                    \"from\": \"sara.shackleton@enron.com\",\n                    \"messageId\": \"<24858174.1075844558213.JavaMail.evans@thyme>\",\n                    \"subject\": \"Southern Cone Financial Master Agreements Schedule\",\n                    \"to\": \"paul.radous@enron.com\",\n                    \"xBcc\": \"\",\n                    \"xCc\": \"\",\n                    \"xFileName\": \"sshackle.nsf\",\n                    \"xFolder\": \"\\\\Sara_Shackleton_Dec2000_June2001_1\\\\Notes Folders\\\\Sent\",\n                    \"xFrom\": \"Sara Shackleton\",\n                    \"xOrigin\": \"SHACKLETON-S\",\n                    \"xTo\": \"Paul Radous\"\n                },\n                \"highlight\": {\n                    \"body\": [\n                        \"…ck/ENRON_DEVELOPMENT@ENRON_DEVELOPMENT, Guillermo \\nCanovas/ENRON_DEVELOPMENT@ENRON_DEVELOPMENT, <pre>Cristian</pre> \\nFolgar/ENRON_DEVELOPMENT@ENRON_DEVELOPMENT, Marta \\nOrtiz/ENRON_DEVELOPMENT@ENRON_DEVELOPMENT, …\"\n                    ]\n                }\n            }\n        ]\n    }\n}"
+        }
+      ]
+    },
+    {
+      "name": "update-index",
+      "request": {
+        "method": "POST",
+        "header": [],
+        "body": {
+          "mode": "raw",
+          "raw": "{\r\n    \"name\": \"emails2\",\r\n    \"storage_type\": \"disk\",\r\n    \"shard_num\": 3,\r\n    \"mappings\": {\r\n        \"properties\": {\r\n            \"@timestamp\": {\r\n                \"type\": \"date\",\r\n                \"index\": true,\r\n                \"store\": false,\r\n                \"sortable\": true,\r\n                \"aggregatable\": true,\r\n                \"highlightable\": false\r\n            },\r\n            \"_id\": {\r\n                \"type\": \"keyword\",\r\n                \"index\": true,\r\n                \"store\": false,\r\n                \"sortable\": true,\r\n                \"aggregatable\": true,\r\n                \"highlightable\": false\r\n            },\r\n            \"bcc\": {\r\n                \"type\": \"text\",\r\n                \"index\": true,\r\n                \"store\": false,\r\n                \"sortable\": false,\r\n                \"aggregatable\": false,\r\n                \"highlightable\": true\r\n            },\r\n            \"body\": {\r\n                \"type\": \"text\",\r\n                \"index\": true,\r\n                \"store\": false,\r\n                \"sortable\": false,\r\n                \"aggregatable\": false,\r\n                \"highlightable\": true\r\n            },\r\n            \"cc\": {\r\n                \"type\": \"text\",\r\n                \"index\": true,\r\n                \"store\": false,\r\n                \"sortable\": false,\r\n                \"aggregatable\": false,\r\n                \"highlightable\": true\r\n            },\r\n            \"contentTransferEncoding\": {\r\n                \"type\": \"text\",\r\n                \"index\": true,\r\n                \"store\": false,\r\n                \"sortable\": false,\r\n                \"aggregatable\": false,\r\n                \"highlightable\": false\r\n            },\r\n            \"contentType\": {\r\n                \"type\": \"text\",\r\n                \"index\": true,\r\n                \"store\": false,\r\n                \"sortable\": false,\r\n                \"aggregatable\": false,\r\n                \"highlightable\": false\r\n            },\r\n            \"date\": {\r\n                \"type\": \"text\",\r\n                \"index\": true,\r\n                \"store\": false,\r\n                \"sortable\": false,\r\n                \"aggregatable\": false,\r\n                \"highlightable\": false\r\n            },\r\n            \"from\": {\r\n                \"type\": \"text\",\r\n                \"index\": true,\r\n                \"store\": false,\r\n                \"sortable\": false,\r\n                \"aggregatable\": false,\r\n                \"highlightable\": true\r\n            },\r\n            \"mainFolder\": {\r\n                \"type\": \"text\",\r\n                \"index\": true,\r\n                \"store\": false,\r\n                \"sortable\": false,\r\n                \"aggregatable\": false,\r\n                \"highlightable\": false\r\n            },\r\n            \"messageId\": {\r\n                \"type\": \"text\",\r\n                \"index\": true,\r\n                \"store\": false,\r\n                \"sortable\": false,\r\n                \"aggregatable\": false,\r\n                \"highlightable\": false\r\n            },\r\n            \"mimeVersion\": {\r\n                \"type\": \"text\",\r\n                \"index\": true,\r\n                \"store\": false,\r\n                \"sortable\": false,\r\n                \"aggregatable\": false,\r\n                \"highlightable\": false\r\n            },\r\n            \"path\": {\r\n                \"type\": \"text\",\r\n                \"index\": true,\r\n                \"store\": false,\r\n                \"sortable\": false,\r\n                \"aggregatable\": false,\r\n                \"highlightable\": false\r\n            },\r\n            \"subject\": {\r\n                \"type\": \"text\",\r\n                \"index\": true,\r\n                \"store\": false,\r\n                \"sortable\": false,\r\n                \"aggregatable\": false,\r\n                \"highlightable\": true\r\n            },\r\n            \"to\": {\r\n                \"type\": \"text\",\r\n                \"index\": true,\r\n                \"store\": false,\r\n                \"sortable\": false,\r\n                \"aggregatable\": false,\r\n                \"highlightable\": true\r\n            },\r\n            \"xBcc\": {\r\n                \"type\": \"text\",\r\n                \"index\": true,\r\n                \"store\": false,\r\n                \"sortable\": false,\r\n                \"aggregatable\": false,\r\n                \"highlightable\": false\r\n            },\r\n            \"xCc\": {\r\n                \"type\": \"text\",\r\n                \"index\": true,\r\n                \"store\": false,\r\n                \"sortable\": false,\r\n                \"aggregatable\": false,\r\n                \"highlightable\": false\r\n            },\r\n            \"xFileName\": {\r\n                \"type\": \"text\",\r\n                \"index\": true,\r\n                \"store\": false,\r\n                \"sortable\": false,\r\n                \"aggregatable\": false,\r\n                \"highlightable\": false\r\n            },\r\n            \"xFolder\": {\r\n                \"type\": \"text\",\r\n                \"index\": true,\r\n                \"store\": false,\r\n                \"sortable\": false,\r\n                \"aggregatable\": false,\r\n                \"highlightable\": false\r\n            },\r\n            \"xFrom\": {\r\n                \"type\": \"text\",\r\n                \"index\": true,\r\n                \"store\": false,\r\n                \"sortable\": false,\r\n                \"aggregatable\": false,\r\n                \"highlightable\": false\r\n            },\r\n            \"xOrigin\": {\r\n                \"type\": \"text\",\r\n                \"index\": true,\r\n                \"store\": false,\r\n                \"sortable\": false,\r\n                \"aggregatable\": false,\r\n                \"highlightable\": false\r\n            },\r\n            \"xTo\": {\r\n                \"type\": \"text\",\r\n                \"index\": true,\r\n                \"store\": false,\r\n                \"sortable\": false,\r\n                \"aggregatable\": false,\r\n                \"highlightable\": false\r\n            }\r\n        }\r\n    }\r\n}",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        },
+        "url": {
+          "raw": "http://localhost:4080/api/index",
+          "protocol": "http",
+          "host": ["localhost"],
+          "port": "4080",
+          "path": ["api", "index"]
+        }
+      },
+      "response": [
+        {
+          "name": "update-index",
+          "originalRequest": {
+            "method": "POST",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n    \"name\": \"emails\",\r\n    \"storage_type\": \"disk\",\r\n    \"shard_num\": 3,\r\n    \"mappings\": {\r\n        \"properties\": {\r\n            \"@timestamp\": {\r\n                \"type\": \"date\",\r\n                \"index\": true,\r\n                \"store\": false,\r\n                \"sortable\": true,\r\n                \"aggregatable\": true,\r\n                \"highlightable\": false\r\n            },\r\n            \"_id\": {\r\n                \"type\": \"keyword\",\r\n                \"index\": true,\r\n                \"store\": false,\r\n                \"sortable\": true,\r\n                \"aggregatable\": true,\r\n                \"highlightable\": false\r\n            },\r\n            \"bcc\": {\r\n                \"type\": \"text\",\r\n                \"index\": true,\r\n                \"store\": false,\r\n                \"sortable\": false,\r\n                \"aggregatable\": false,\r\n                \"highlightable\": true\r\n            },\r\n            \"body\": {\r\n                \"type\": \"text\",\r\n                \"index\": true,\r\n                \"store\": false,\r\n                \"sortable\": false,\r\n                \"aggregatable\": false,\r\n                \"highlightable\": true\r\n            },\r\n            \"cc\": {\r\n                \"type\": \"text\",\r\n                \"index\": true,\r\n                \"store\": false,\r\n                \"sortable\": false,\r\n                \"aggregatable\": false,\r\n                \"highlightable\": true\r\n            },\r\n            \"contentTransferEncoding\": {\r\n                \"type\": \"text\",\r\n                \"index\": true,\r\n                \"store\": false,\r\n                \"sortable\": false,\r\n                \"aggregatable\": false,\r\n                \"highlightable\": false\r\n            },\r\n            \"contentType\": {\r\n                \"type\": \"text\",\r\n                \"index\": true,\r\n                \"store\": false,\r\n                \"sortable\": false,\r\n                \"aggregatable\": false,\r\n                \"highlightable\": false\r\n            },\r\n            \"date\": {\r\n                \"type\": \"text\",\r\n                \"index\": true,\r\n                \"store\": false,\r\n                \"sortable\": false,\r\n                \"aggregatable\": false,\r\n                \"highlightable\": false\r\n            },\r\n            \"from\": {\r\n                \"type\": \"text\",\r\n                \"index\": true,\r\n                \"store\": false,\r\n                \"sortable\": false,\r\n                \"aggregatable\": false,\r\n                \"highlightable\": true\r\n            },\r\n            \"mainFolder\": {\r\n                \"type\": \"text\",\r\n                \"index\": true,\r\n                \"store\": false,\r\n                \"sortable\": false,\r\n                \"aggregatable\": false,\r\n                \"highlightable\": false\r\n            },\r\n            \"messageId\": {\r\n                \"type\": \"text\",\r\n                \"index\": true,\r\n                \"store\": false,\r\n                \"sortable\": false,\r\n                \"aggregatable\": false,\r\n                \"highlightable\": false\r\n            },\r\n            \"mimeVersion\": {\r\n                \"type\": \"text\",\r\n                \"index\": true,\r\n                \"store\": false,\r\n                \"sortable\": false,\r\n                \"aggregatable\": false,\r\n                \"highlightable\": false\r\n            },\r\n            \"path\": {\r\n                \"type\": \"text\",\r\n                \"index\": true,\r\n                \"store\": false,\r\n                \"sortable\": false,\r\n                \"aggregatable\": false,\r\n                \"highlightable\": false\r\n            },\r\n            \"subject\": {\r\n                \"type\": \"text\",\r\n                \"index\": true,\r\n                \"store\": false,\r\n                \"sortable\": false,\r\n                \"aggregatable\": false,\r\n                \"highlightable\": true\r\n            },\r\n            \"to\": {\r\n                \"type\": \"text\",\r\n                \"index\": true,\r\n                \"store\": false,\r\n                \"sortable\": false,\r\n                \"aggregatable\": false,\r\n                \"highlightable\": true\r\n            },\r\n            \"xBcc\": {\r\n                \"type\": \"text\",\r\n                \"index\": true,\r\n                \"store\": false,\r\n                \"sortable\": false,\r\n                \"aggregatable\": false,\r\n                \"highlightable\": false\r\n            },\r\n            \"xCc\": {\r\n                \"type\": \"text\",\r\n                \"index\": true,\r\n                \"store\": false,\r\n                \"sortable\": false,\r\n                \"aggregatable\": false,\r\n                \"highlightable\": false\r\n            },\r\n            \"xFileName\": {\r\n                \"type\": \"text\",\r\n                \"index\": true,\r\n                \"store\": false,\r\n                \"sortable\": false,\r\n                \"aggregatable\": false,\r\n                \"highlightable\": false\r\n            },\r\n            \"xFolder\": {\r\n                \"type\": \"text\",\r\n                \"index\": true,\r\n                \"store\": false,\r\n                \"sortable\": false,\r\n                \"aggregatable\": false,\r\n                \"highlightable\": false\r\n            },\r\n            \"xFrom\": {\r\n                \"type\": \"text\",\r\n                \"index\": true,\r\n                \"store\": false,\r\n                \"sortable\": false,\r\n                \"aggregatable\": false,\r\n                \"highlightable\": false\r\n            },\r\n            \"xOrigin\": {\r\n                \"type\": \"text\",\r\n                \"index\": true,\r\n                \"store\": false,\r\n                \"sortable\": false,\r\n                \"aggregatable\": false,\r\n                \"highlightable\": false\r\n            },\r\n            \"xTo\": {\r\n                \"type\": \"text\",\r\n                \"index\": true,\r\n                \"store\": false,\r\n                \"sortable\": false,\r\n                \"aggregatable\": false,\r\n                \"highlightable\": false\r\n            }\r\n        }\r\n    }\r\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "http://localhost:4080/api/index",
+              "protocol": "http",
+              "host": ["localhost"],
+              "port": "4080",
+              "path": ["api", "index"]
+            }
+          },
+          "status": "OK",
+          "code": 200,
+          "_postman_previewlanguage": "json",
+          "header": [
+            {
+              "key": "Content-Type",
+              "value": "application/json; charset=utf-8"
+            },
+            {
+              "key": "Zinc",
+              "value": "0.4.10"
+            },
+            {
+              "key": "Date",
+              "value": "Thu, 23 Jan 2025 12:17:00 GMT"
+            },
+            {
+              "key": "Content-Length",
+              "value": "56"
+            }
+          ],
+          "cookie": [],
+          "body": "{\n    \"message\": \"ok\",\n    \"index\": \"emails\",\n    \"storage_type\": \"disk\"\n}"
+        }
+      ]
+    },
+    {
+      "name": "get-mapping",
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "http://localhost:4080/api/:index/_mapping",
+          "protocol": "http",
+          "host": ["localhost"],
+          "port": "4080",
+          "path": ["api", ":index", "_mapping"],
+          "variable": [
+            {
+              "key": "index",
+              "value": "emails"
+            }
+          ]
+        }
+      },
+      "response": [
+        {
+          "name": "get-mapping",
+          "originalRequest": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "http://localhost:4080/api/:index/_mapping",
+              "protocol": "http",
+              "host": ["localhost"],
+              "port": "4080",
+              "path": ["api", ":index", "_mapping"],
+              "variable": [
+                {
+                  "key": "index",
+                  "value": "emails"
+                }
+              ]
+            }
+          },
+          "status": "OK",
+          "code": 200,
+          "_postman_previewlanguage": "json",
+          "header": [
+            {
+              "key": "Content-Type",
+              "value": "application/json; charset=utf-8"
+            },
+            {
+              "key": "Zinc",
+              "value": "0.4.10"
+            },
+            {
+              "key": "Date",
+              "value": "Thu, 23 Jan 2025 12:16:51 GMT"
+            },
+            {
+              "key": "Transfer-Encoding",
+              "value": "chunked"
+            }
+          ],
+          "cookie": [],
+          "body": "{\n    \"emails\": {\n        \"mappings\": {\n            \"properties\": {\n                \"@timestamp\": {\n                    \"type\": \"date\",\n                    \"index\": true,\n                    \"store\": false,\n                    \"sortable\": true,\n                    \"aggregatable\": true,\n                    \"highlightable\": false\n                },\n                \"_id\": {\n                    \"type\": \"keyword\",\n                    \"index\": true,\n                    \"store\": false,\n                    \"sortable\": true,\n                    \"aggregatable\": true,\n                    \"highlightable\": false\n                },\n                \"bcc\": {\n                    \"type\": \"text\",\n                    \"index\": true,\n                    \"store\": true,\n                    \"sortable\": false,\n                    \"aggregatable\": false,\n                    \"highlightable\": true\n                },\n                \"body\": {\n                    \"type\": \"text\",\n                    \"index\": true,\n                    \"store\": true,\n                    \"sortable\": false,\n                    \"aggregatable\": false,\n                    \"highlightable\": true\n                },\n                \"cc\": {\n                    \"type\": \"text\",\n                    \"index\": true,\n                    \"store\": true,\n                    \"sortable\": false,\n                    \"aggregatable\": false,\n                    \"highlightable\": true\n                },\n                \"contentTransferEncoding\": {\n                    \"type\": \"text\",\n                    \"index\": true,\n                    \"store\": false,\n                    \"sortable\": false,\n                    \"aggregatable\": false,\n                    \"highlightable\": false\n                },\n                \"contentType\": {\n                    \"type\": \"text\",\n                    \"index\": true,\n                    \"store\": false,\n                    \"sortable\": false,\n                    \"aggregatable\": false,\n                    \"highlightable\": false\n                },\n                \"date\": {\n                    \"type\": \"text\",\n                    \"index\": true,\n                    \"store\": false,\n                    \"sortable\": false,\n                    \"aggregatable\": false,\n                    \"highlightable\": false\n                },\n                \"from\": {\n                    \"type\": \"text\",\n                    \"index\": true,\n                    \"store\": true,\n                    \"sortable\": false,\n                    \"aggregatable\": false,\n                    \"highlightable\": true\n                },\n                \"mainFolder\": {\n                    \"type\": \"text\",\n                    \"index\": true,\n                    \"store\": false,\n                    \"sortable\": false,\n                    \"aggregatable\": false,\n                    \"highlightable\": false\n                },\n                \"messageId\": {\n                    \"type\": \"text\",\n                    \"index\": true,\n                    \"store\": false,\n                    \"sortable\": false,\n                    \"aggregatable\": false,\n                    \"highlightable\": false\n                },\n                \"mimeVersion\": {\n                    \"type\": \"text\",\n                    \"index\": true,\n                    \"store\": false,\n                    \"sortable\": false,\n                    \"aggregatable\": false,\n                    \"highlightable\": false\n                },\n                \"path\": {\n                    \"type\": \"text\",\n                    \"index\": true,\n                    \"store\": false,\n                    \"sortable\": false,\n                    \"aggregatable\": false,\n                    \"highlightable\": false\n                },\n                \"subject\": {\n                    \"type\": \"text\",\n                    \"index\": true,\n                    \"store\": true,\n                    \"sortable\": false,\n                    \"aggregatable\": false,\n                    \"highlightable\": true\n                },\n                \"to\": {\n                    \"type\": \"text\",\n                    \"index\": true,\n                    \"store\": true,\n                    \"sortable\": false,\n                    \"aggregatable\": false,\n                    \"highlightable\": true\n                },\n                \"xBcc\": {\n                    \"type\": \"text\",\n                    \"index\": true,\n                    \"store\": true,\n                    \"sortable\": false,\n                    \"aggregatable\": false,\n                    \"highlightable\": true\n                },\n                \"xCc\": {\n                    \"type\": \"text\",\n                    \"index\": true,\n                    \"store\": true,\n                    \"sortable\": false,\n                    \"aggregatable\": false,\n                    \"highlightable\": true\n                },\n                \"xFileName\": {\n                    \"type\": \"text\",\n                    \"index\": true,\n                    \"store\": false,\n                    \"sortable\": false,\n                    \"aggregatable\": false,\n                    \"highlightable\": false\n                },\n                \"xFolder\": {\n                    \"type\": \"text\",\n                    \"index\": true,\n                    \"store\": false,\n                    \"sortable\": false,\n                    \"aggregatable\": false,\n                    \"highlightable\": false\n                },\n                \"xFrom\": {\n                    \"type\": \"text\",\n                    \"index\": true,\n                    \"store\": true,\n                    \"sortable\": false,\n                    \"aggregatable\": false,\n                    \"highlightable\": true\n                },\n                \"xOrigin\": {\n                    \"type\": \"text\",\n                    \"index\": true,\n                    \"store\": false,\n                    \"sortable\": false,\n                    \"aggregatable\": false,\n                    \"highlightable\": false\n                },\n                \"xTo\": {\n                    \"type\": \"text\",\n                    \"index\": true,\n                    \"store\": true,\n                    \"sortable\": false,\n                    \"aggregatable\": false,\n                    \"highlightable\": true\n                }\n            }\n        }\n    }\n}"
+        }
+      ]
+    }
+  ],
+  "auth": {
+    "type": "basic",
+    "basic": [
+      {
+        "key": "password",
+        "value": "root",
+        "type": "string"
+      },
+      {
+        "key": "username",
+        "value": "root",
+        "type": "string"
+      }
+    ]
+  },
+  "event": [
+    {
+      "listen": "prerequest",
+      "script": {
+        "type": "text/javascript",
+        "packages": {},
+        "exec": [""]
+      }
+    },
+    {
+      "listen": "test",
+      "script": {
+        "type": "text/javascript",
+        "packages": {},
+        "exec": [""]
+      }
+    }
+  ]
+}
