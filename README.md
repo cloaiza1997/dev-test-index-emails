@@ -45,8 +45,10 @@ Para facilitar el proceso se recomienda usar Linux, si es un equipo Windows, se 
 ```shell
 # Verificar si se tiene instalado
 wsl --list --verbose
+
 # En caso de no tener instalado Ubuntu
 wsl --install
+
 # Abrir la terminal
 wsl -d Ubuntu
 ```
@@ -56,10 +58,13 @@ wsl -d Ubuntu
 ```shell
 # Abrir la carpeta en donde se guardarán los correos
 cd 00-indexer/mock/email-data
+
 # Descargar la base de datos
 curl -L -o enron_mail_20110402.tgz http://www.cs.cmu.edu/~enron/enron_mail_20110402.tgz
+
 # Descomprimir
 tar -xvzf enron_mail_20110402.tgz
+
 # Regresar a la raíz del proyecto
 cd ../../../
 ```
